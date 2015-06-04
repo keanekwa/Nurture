@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -40,6 +41,7 @@ public class MainActivity extends ActionBarActivity {
     int imageIDs[]={R.drawable.plant_seed,R.drawable.plant_shoot,R.drawable.plant_seedling,R.drawable.plant_small,R.drawable.plant_big};
     int messageCount=imageIDs.length;
     int currentIndex=0;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +102,31 @@ public class MainActivity extends ActionBarActivity {
         // set the animation type to imageSwitcher
         mPlantie.setInAnimation(in);
         mPlantie.setOutAnimation(out);
+    }
+
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            refresh();
+            handler.postDelayed(runnable, 100);
+        }
+    };
+
+    public void refresh(){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("userInfo");
+        query.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                if (e == null && parseObjects.size() == 1) {
+                    ParseObject userInfo = parseObjects.get(0);
+                    if (userInfo.getString("receiver")==null && userInfo.getBoolean("hasDoneKindness")) {
+                        userInfo.put("hasDoneKindness", false);
+                        userInfo.put("plantStage", 1+userInfo.getInt("plantStage"));
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -180,6 +207,7 @@ public class MainActivity extends ActionBarActivity {
                                 if(e==null && parseObjects.size()==1){
                                     final ParseObject userInfo = parseObjects.get(0);
                                     userInfo.put("hasDoneKindness", true);
+                                    userInfo.remove("receiver");
                                     userInfo.saveInBackground(new SaveCallback() {
                                         @Override
                                         public void done(ParseException e) {
