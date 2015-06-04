@@ -39,7 +39,7 @@ public class MainActivity extends ActionBarActivity {
     private Button mNewButton;
     private ImageSwitcher mPlantie;
     private TextView mMeter;
-    int imageIDs[]={R.drawable.plant_seed,R.drawable.plant_shoot,R.drawable.plant_seedling,R.drawable.plant_small,R.drawable.plant_big};
+    int imageIDs[]={R.drawable.plant_seed,R.drawable.plant_shoot,R.drawable.plant_seedling,R.drawable.plant_small,R.drawable.plant_big,R.drawable.plant_withered};
     int messageCount=imageIDs.length;
     int currentIndex=0;
     private Handler handler;
@@ -200,13 +200,13 @@ public class MainActivity extends ActionBarActivity {
         final EditText usernameEditText = (EditText)mTextEntryView.findViewById(R.id.helperUsernameEditText);
         builder.setTitle("Who showed you kindness today?");
         builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        }
-                        });
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                    }
-                });
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
         final AlertDialog alert = builder.create();
         alert.show();
 
