@@ -1,6 +1,7 @@
 package com.example.user.nurture;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.ActionBar;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.GetDataCallback;
+import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -32,8 +34,7 @@ import java.util.List;
 
 public class AchievementsActivity extends ActionBarActivity {
 
-    ProgressBar progressBar = new ProgressBar(AchievementsActivity.this);
-    ListView lvToShow = (ListView)findViewById(R.id.achievesListView);
+
     ArrayList <ParseObject> mAchieves = new ArrayList<>();
 
     @Override
@@ -43,6 +44,7 @@ public class AchievementsActivity extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setTitle("Your Achievements");
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
                 ParseQuery<ParseObject> check = ParseQuery.getQuery("Achievements");
                 check.findInBackground(new FindCallback<ParseObject>() {
@@ -68,8 +70,8 @@ public class AchievementsActivity extends ActionBarActivity {
 
 
 
-        
 
+        ListView lvToShow = (ListView)findViewById(R.id.achievesListView);
         ArrayAdapter<ParseObject> adapter;
         adapter = new AchievesAdapter(this, R.layout.list_achieves, mAchieves);
         lvToShow.setAdapter(adapter);
@@ -90,8 +92,19 @@ public class AchievementsActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == android.R.id.home) {
+            Intent intent = new Intent(AchievementsActivity.this, MainActivity.class);
+            AchievementsActivity.this.startActivity(intent);
+        }
+
+        else if (id == R.id.action_logout){
+            ParseUser.getCurrentUser().logOutInBackground(new LogOutCallback() {
+                @Override
+                public void done(ParseException e) {
+                    Intent intent = new Intent(AchievementsActivity.this, LoginActivity.class);
+                    AchievementsActivity.this.startActivity(intent);
+                }
+            });
         }
 
         return super.onOptionsItemSelected(item);
@@ -131,7 +144,6 @@ public class AchievementsActivity extends ActionBarActivity {
                                         data, 0,
                                         data.length);
                         achievesIcon.setImageBitmap(bmp);
-
                     }
                 }
             });

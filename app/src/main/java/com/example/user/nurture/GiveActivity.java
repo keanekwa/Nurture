@@ -1,7 +1,7 @@
 package com.example.user.nurture;
 
-import android.app.ActionBar;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
+import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -51,7 +52,8 @@ public class GiveActivity extends ActionBarActivity {
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
-        actionBar.setTitle("Help");
+        actionBar.setTitle("This is who you are giving to.");
+        actionBar.setDisplayHomeAsUpEnabled(true);
         /////////////////////////////
         // set userBlank "profile" //
         /////////////////////////////
@@ -173,8 +175,6 @@ public class GiveActivity extends ActionBarActivity {
                         listOfKindness.add(i.getString("kindness"));
                     }
                     String toBeDone = curUserInfo.getString("kindnessToBeDone");
-                    listOfKindness.remove(toBeDone);
-                    listOfKindness.add(0, toBeDone);
                     mAdapter = new SuggestedAdapter(GiveActivity.this, R.layout.suggested_list_item, listOfKindness, false, toBeDone);
                     mListView.setAdapter(mAdapter);
                 }
@@ -211,6 +211,21 @@ public class GiveActivity extends ActionBarActivity {
             return true;
         }
 
+        else if (id == android.R.id.home) {
+            Intent intent = new Intent(GiveActivity.this, MainActivity.class);
+            GiveActivity.this.startActivity(intent);
+        }
+        else if (id == R.id.action_logout) {
+            ParseUser.getCurrentUser().logOutInBackground(new LogOutCallback() {
+                @Override
+                public void done(ParseException e) {
+                    Intent intent = new Intent(GiveActivity.this, LoginActivity.class);
+                    GiveActivity.this.startActivity(intent);
+                }
+            });
+        }
+
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -242,7 +257,7 @@ public class GiveActivity extends ActionBarActivity {
 
             if(!mIsList && kindnessSuggestion.equals(mKindnessToDo)) {
                 suggestedTextView.setTextColor(Color.WHITE);
-                row.setBackgroundColor(Color.parseColor("#3BB94B"));
+                row.setBackgroundColor(Color.parseColor("#009688"));
                 doItButton.setVisibility(View.GONE);
                 doingThisTextView.setVisibility(View.VISIBLE);
                 doingThisTextView.setText("Doing this!");
