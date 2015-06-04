@@ -34,7 +34,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         checkLogin();
-        //mPlantie.setImageResource(imageIDs[currentIndex]);
+        //mPlantie.setImageResource(imageIDs[0]);
 
         mGiveButton = (Button) findViewById(R.id.GiveButton);
         mReceiveButton = (Button) findViewById(R.id.ReceiveButton);
