@@ -36,8 +36,6 @@ public class GiveActivity extends ActionBarActivity {
     private ListView mListView;
     private ArrayList<String> listOfKindness;
 
-    private ParseUser receiver;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,20 +55,17 @@ public class GiveActivity extends ActionBarActivity {
             public void done(List<ParseObject> parseObjects, ParseException e) {
                 if(e==null && parseObjects.size()==1){
                     ParseObject userInfo = parseObjects.get(0);
-                    mNameTextView.setText(userInfo.getString("username"));
-                    mSchoolTextView.setText(userInfo.getString("class"));
-                    //mProfilePic.setImageDrawable(userInfo.getFile("profilepic"));
-                    String receiverUsername = parseObjects.get(0).getString("receiver");
+                    String receiverUsername = userInfo.getString("receiver");
                     if(receiverUsername==null){
                         ParseQuery<ParseUser> query = ParseUser.getQuery();
                         query.whereEqualTo("school", ParseUser.getCurrentUser().getString("school"));
                         query.findInBackground(new FindCallback<ParseUser>() {
                             @Override
-                            public void done(List<ParseUser> users, ParseException e) {
-                                if (e == null && users.size()>0) {
-                                    for (ParseUser i : users){
-                                        
-                                    }
+                            public void done(List<ParseUser> usersFound, ParseException e) {
+                                if (e == null && usersFound.size()>0) {
+                                    final ArrayList<ParseUser> users = new ArrayList<>(usersFound);
+                                    ParseQuery<ParseObject> query = ParseQuery.getQuery("userInfo");
+                                    //query.whereContainedIn("username", blah);
                                     //TODO: randomly select a receiver
                                 }
                             }
@@ -83,7 +78,7 @@ public class GiveActivity extends ActionBarActivity {
                             @Override
                             public void done(List<ParseUser> users, ParseException e) {
                                 if (e == null && users.size() == 1) {
-                                    receiver = users.get(0);
+                                    ParseUser receiver = users.get(0);
                                     mNameTextView.setText(receiver.getUsername());
                                     mSchoolTextView.setText(receiver.getString("school"));
                                     //TODO: profile pic

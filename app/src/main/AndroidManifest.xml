@@ -28,10 +28,6 @@
             android:label="@string/title_activity_give" >
         </activity>
         <activity
-            android:name=".ReceiveActivity"
-            android:label="@string/title_activity_receive" >
-        </activity>
-        <activity
             android:name=".SplashScreenActivity"
             android:label="@string/title_activity_splash_screen" >
             <intent-filter>
