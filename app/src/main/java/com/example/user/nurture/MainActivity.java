@@ -107,7 +107,7 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public  void  checkLogin(){
+    public void checkLogin(){
         //checks if user is logged in
         if (ParseUser.getCurrentUser()==null)
         {

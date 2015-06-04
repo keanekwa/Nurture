@@ -1,11 +1,16 @@
 package com.example.user.nurture;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -23,7 +28,7 @@ import java.util.List;
 public class GiveActivity extends ActionBarActivity {
     private ImageView mProfilePic;
     private TextView mNameTextView;
-    private TextView mClassTextView;
+    private TextView mSchoolTextView;
     private ArrayAdapter<String> mAdapter;
     private ListView mListView;
     private ArrayList<String> listOfKindness;
@@ -38,7 +43,7 @@ public class GiveActivity extends ActionBarActivity {
         ////////////////////////
         mProfilePic = (ImageView)findViewById(R.id.profilePic);
         mNameTextView = (TextView)findViewById(R.id.nameTextView);
-        mClassTextView = (TextView)findViewById(R.id.classTextView);
+        mSchoolTextView = (TextView)findViewById(R.id.schoolTextView);
 
         Intent intent = getIntent();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("userInfo");
@@ -49,7 +54,7 @@ public class GiveActivity extends ActionBarActivity {
                 if(e==null && parseObjects.size()==1){
                     ParseObject userInfo = parseObjects.get(0);
                     mNameTextView.setText(userInfo.getString("username"));
-                    mClassTextView.setText(userInfo.getString("class"));
+                    mSchoolTextView.setText(userInfo.getString("class"));
                     //mProfilePic.setImageDrawable(userInfo.getFile("profilePic"));
                 }
             }
@@ -69,7 +74,7 @@ public class GiveActivity extends ActionBarActivity {
                     for (ParseObject i : parseObjects) {
                         listOfKindness.add(i.getString("kindness"));
                     }
-                    mAdapter = new ArrayAdapter<>(GiveActivity.this, android.R.layout.simple_list_item_1, android.R.id.text1, listOfKindness);
+                    mAdapter = new SuggestedAdapter(GiveActivity.this, R.layout.suggested_list_item, listOfKindness);
                     mListView.setAdapter(mAdapter);
                 }
             }
@@ -96,5 +101,36 @@ public class GiveActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public class SuggestedAdapter extends ArrayAdapter<String>{
+        private int mResource;
+        private ArrayList<String> mSuggested;
+
+        public SuggestedAdapter(Context context, int resource, ArrayList<String> suggestedKindnesses){
+            super(context, resource, suggestedKindnesses);
+            this.mResource = resource;
+            this.mSuggested = suggestedKindnesses;
+        }
+
+        @Override
+        public View getView(int position, View row, ViewGroup parent){
+            if (row==null){
+                row = LayoutInflater.from(getContext()).inflate(mResource, parent, false);
+            }
+
+            TextView suggestedTextView = (TextView)row.findViewById(R.id.suggestedTextView);
+            suggestedTextView.setText(mSuggested.get(position));
+
+            Button doItButton = (Button)row.findViewById(R.id.doItButton);
+            doItButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+
+            return row;
+        }
     }
 }
