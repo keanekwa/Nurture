@@ -12,7 +12,7 @@
     android:orientation="vertical"
     android:background="#3BB94B">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -24,26 +24,16 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_gravity="center"
-            android:id="@+id/Plant"
-            android:layout_weight="5">
+            android:id="@+id/Plant"/>
 
-            <ProgressBar
-                android:id="@+id/spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:indeterminate="true"
-                android:layout_gravity="center"/>
-
-        </ImageSwitcher>
-
-        <Button
-            android:layout_width="match_parent"
+        <ProgressBar
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/NewButton"
-            android:text="@string/img_test"
-            android:layout_weight="1"/>
+            android:indeterminate="true"
+            android:layout_centerInParent="true"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
     <LinearLayout

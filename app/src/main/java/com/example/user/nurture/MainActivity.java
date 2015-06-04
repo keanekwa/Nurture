@@ -39,7 +39,6 @@ public class MainActivity extends ActionBarActivity {
 
     private Button mGiveButton;
     private Button mReceiveButton;
-    private Button mNewButton;
     private ImageSwitcher mPlantie;
     private TextView mMeter;
     int imageIDs[]={R.drawable.plant_seed,R.drawable.plant_shoot,R.drawable.plant_seedling,R.drawable.plant_small,R.drawable.plant_withered};
@@ -64,22 +63,11 @@ public class MainActivity extends ActionBarActivity {
         mGiveButton = (Button) findViewById(R.id.GiveButton);
         mReceiveButton = (Button) findViewById(R.id.ReceiveButton);
         mPlantie = (ImageSwitcher)findViewById(R.id.Plant);
-        mNewButton = (Button)findViewById(R.id.NewButton);
         mGiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, GiveActivity.class);
                 startActivity(intent);
-            }
-        });
-        mNewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentIndex++;
-                if(currentIndex==messageCount){
-                    currentIndex=0;
-                }
-                mPlantie.setImageResource(imageIDs[currentIndex]);
             }
         });
 
@@ -181,6 +169,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onResume(){
         super.onResume();
+        pb.setVisibility(View.VISIBLE);
         ParseQuery<ParseObject> query = ParseQuery.getQuery("userInfo");
         if(ParseUser.getCurrentUser()!=null) query.whereEqualTo("receiver", ParseUser.getCurrentUser().getUsername());
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -194,10 +183,12 @@ public class MainActivity extends ActionBarActivity {
                             @Override
                             public void onClick(View v) {
                                 Dialog();
+                                pb.setVisibility(View.GONE);
                             }
                         });
                     } else {
                         mReceiveButton.setEnabled(false);
+                        pb.setVisibility(View.GONE);
                     }
                 }
             }
