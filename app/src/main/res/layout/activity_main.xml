@@ -1,11 +1,16 @@
-<LinearLayout   xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context=".MainActivity"
-                android:weightSum="4"
-                android:orientation="vertical"
-                android:background="#3BB94B">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:weightSum="4"
+    android:orientation="vertical"
+    android:background="#3BB94B">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,8 +18,7 @@
         android:orientation="vertical"
         android:layout_weight="3"
         android:weightSum="6"
-        android:background="@drawable/background"
-        >
+        android:background="@drawable/background">
 
         <ImageSwitcher
             android:layout_width="wrap_content"
@@ -22,8 +26,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:id="@+id/Plant"
-            android:layout_weight="5"
-            >
+            android:layout_weight="5">
         </ImageSwitcher>
 
         <Button
@@ -31,8 +34,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/NewButton"
             android:text="@string/img_test"
-            android:layout_weight="1"
-                />
+            android:layout_weight="1"/>
 
     </LinearLayout>
 
@@ -66,7 +68,5 @@
 
 
     </LinearLayout>
-
-
 
 </LinearLayout>

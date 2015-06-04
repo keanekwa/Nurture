@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -78,13 +79,14 @@ public class AchievementsActivity extends ActionBarActivity {
             if (row == null) {
                 row = getLayoutInflater().inflate(mResource, parent, false);
             }
-            //get the homework to be displayed in row
-            final String currentFriend = mAchieves.get(position);
-            //display data from homework into row
+
+            ParseQuery<ParseObject> check = ParseQuery.getQuery("Achievements");
+
+            final String currentAchieve = mAchieves.get(position);
             TextView titleTextView = (TextView) row.findViewById(R.id.achievesTitle);
-            titleTextView.setText(currentFriend);
+            titleTextView.setText(currentAchieve);
             final TextView subtitleTextView = (TextView) row.findViewById(R.id.achievesSubtitle);
-            ParseQuery<ParseUser> check = ParseUser.getQuery();
+            subtitleTextView.setText(currentAchieve);
             Button achievesIcon = (Button) row.findViewById(R.id.achievesPic);
             achievesIcon.setBackgroundResource(R.drawable.logouticon);
             return row;
