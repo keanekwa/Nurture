@@ -32,8 +32,7 @@ import java.util.List;
 
 public class AchievementsActivity extends ActionBarActivity {
 
-    ProgressBar progressBar = new ProgressBar(AchievementsActivity.this);
-    ListView lvToShow = (ListView)findViewById(R.id.achievesListView);
+
     ArrayList <ParseObject> mAchieves = new ArrayList<>();
 
     @Override
@@ -68,8 +67,8 @@ public class AchievementsActivity extends ActionBarActivity {
 
 
 
-        
 
+        ListView lvToShow = (ListView)findViewById(R.id.achievesListView);
         ArrayAdapter<ParseObject> adapter;
         adapter = new AchievesAdapter(this, R.layout.list_achieves, mAchieves);
         lvToShow.setAdapter(adapter);
