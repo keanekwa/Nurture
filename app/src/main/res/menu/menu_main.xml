@@ -2,6 +2,7 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context=".MainActivity">
+<<<<<<< HEAD
     <item
         android:id="@+id/action_logout"
         android:title="Logout"
@@ -12,4 +13,14 @@
         android:title="Profile"
         android:icon="@drawable/profileicon"
         />
+=======
+    <item android:id="@+id/action_logout"
+          android:title="Logout"
+          app:showAsAction="ifRoom"
+        android:icon="@drawable/logouticon"/>
+      <item android:id="@+id/action_profile"
+          android:title="Profile"
+          android:icon="@drawable/profileicon"
+          app:showAsAction="ifRoom"/>
+>>>>>>> origin/master
 </menu>

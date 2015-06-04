@@ -50,7 +50,7 @@ public class GiveActivity extends ActionBarActivity {
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
-        actionBar.setTitle("Give");
+        actionBar.setTitle("Help");
         /////////////////////////////
         // set userBlank "profile" //
         /////////////////////////////
