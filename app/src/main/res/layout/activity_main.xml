@@ -31,17 +31,20 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/NewButton"
+        android:text="Test for Image"
             />
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/ReceiveButton"
+        android:text="Receive Help"
         />
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/GiveButton"
+        android:text="Help Someone"
         />
 
     </LinearLayout>
