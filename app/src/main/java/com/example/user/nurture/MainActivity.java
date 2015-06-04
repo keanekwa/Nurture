@@ -133,7 +133,7 @@ public class MainActivity extends ActionBarActivity {
         mTextEntryView = factory.inflate(R.layout.addreceiver_dialog_text_entry, null);
 
         new AlertDialog.Builder(this)
-                .setIcon(R.drawable.nurturelogowhite)
+                .setIcon(R.drawable.nurturelogoicon)
                 .setTitle("Who helped you?")
                 .setView(mTextEntryView)
 
