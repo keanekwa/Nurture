@@ -29,12 +29,13 @@
         android:hint="Password"
         android:layout_row="0"
         android:layout_column="1"
-        android:textSize="30dp"
         android:layout_below="@+id/userEditText"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/userEditText"
-        android:layout_alignEnd="@+id/userEditText" />
+        android:background="#ffffff"
+        android:layout_alignLeft="@+id/signUpTextView"
+        android:layout_alignStart="@+id/signUpTextView"
+        android:layout_alignRight="@+id/signUpTextView"
+        android:layout_alignEnd="@+id/signUpTextView"
+        android:padding="20dp" />
 
     <Button
         android:layout_width="80dp"
