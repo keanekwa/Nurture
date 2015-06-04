@@ -151,10 +151,13 @@ public class MainActivity extends ActionBarActivity {
         query1.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
-                if (e == null && parseObjects.size() > 0) {
+                if (e == null) {
                     boolean buttonActivated = false;
-                    for(ParseObject i: parseObjects){
-                        if(i.getString("kindnessToBeDone") != null && !i.getBoolean("hasDoneKindness")) buttonActivated = true;
+                    if(parseObjects.size() > 0) {
+                        for (ParseObject i : parseObjects) {
+                            if (i.getString("kindnessToBeDone") != null && !i.getBoolean("hasDoneKindness"))
+                                buttonActivated = true;
+                        }
                     }
                     if (buttonActivated) {
                         //Kindness to be done, but has not been done
@@ -166,9 +169,9 @@ public class MainActivity extends ActionBarActivity {
                                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                                     mReceiveImage.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.receivehelp_3));
                                 }
-                                Dialog();
                                 if (event.getAction() == MotionEvent.ACTION_UP) {
                                     mReceiveImage.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.receivehelp));
+                                    Dialog();
                                 }
                                 pb.setVisibility(View.GONE);
                                 return false;
@@ -223,34 +226,27 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onResume(){
-        super.onResume();
-        refresh();
-    }
-
     public void Dialog() {
         LayoutInflater li = LayoutInflater.from(MainActivity.this);
         View mTextEntryView = li.inflate(R.layout.addreceiver_dialog_text_entry, null);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(mTextEntryView);
-
-        new AlertDialog.Builder(this)
-                .setIcon(R.drawable.nurturelogoicon)
-                .setTitle("Who helped you?")
-                .setView(mTextEntryView);
+        builder.setIcon(R.drawable.nurturelogoicon);
 
         final EditText usernameEditText = (EditText)mTextEntryView.findViewById(R.id.helperUsernameEditText);
         builder.setTitle("Who showed you kindness today?");
         builder.setPositiveButton("Confirm", null);
-        builder.setNegativeButton("Cancel", null);
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int whichButton){
+                dialog.cancel();
+            }
+        });
         final AlertDialog alert = builder.create();
         alert.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
-            public void onShow(DialogInterface dialog) {
+            public void onShow(final DialogInterface dialog) {
                 Button posbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
-                Button negbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
                 posbutton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -269,7 +265,9 @@ public class MainActivity extends ActionBarActivity {
                                         @Override
                                         public void done(ParseException e) {
                                             alertMessage(userInfo.getString("username") + "'s kindness has been recorded!");
+                                            mReceiveImage.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.receivehelp_2));
                                             mReceiveButton.setEnabled(false);
+                                            dialog.cancel();
                                         }
                                     });
                                 } else {
@@ -277,12 +275,6 @@ public class MainActivity extends ActionBarActivity {
                                 }
                             }
                         });
-                    }
-                });
-                negbutton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        alert.cancel();
                     }
                 });
             }
