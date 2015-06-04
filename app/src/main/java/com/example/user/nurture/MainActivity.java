@@ -36,7 +36,7 @@ import java.util.List;
 
 public class MainActivity extends ActionBarActivity {
 
-    private Button mGiveButton;
+    private LinearLayout mGiveButton;
     private LinearLayout mReceiveButton;
     private ImageSwitcher mPlantie;
     private TextView mMeter;
@@ -59,7 +59,7 @@ public class MainActivity extends ActionBarActivity {
 
         pb = (ProgressBar)findViewById(R.id.spinner);
         pb.setVisibility(View.GONE);
-        mGiveButton = (Button) findViewById(R.id.GiveButton);
+        mGiveButton = (LinearLayout) findViewById(R.id.GiveButton);
         mReceiveButton = (LinearLayout) findViewById(R.id.ReceiveButton);
         mPlantie = (ImageSwitcher)findViewById(R.id.Plant);
         mGiveButton.setOnClickListener(new View.OnClickListener() {

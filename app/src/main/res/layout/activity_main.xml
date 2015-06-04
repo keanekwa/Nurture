@@ -54,23 +54,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageView3"
-                android:src="@drawable/receivehelp_1"
+                android:src="@drawable/receivehelp"
                 android:scaleType="fitXY"
                 android:adjustViewBounds="true"/>
         </LinearLayout>
 
-
-        <Button
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:id="@+id/GiveButton"
             android:layout_weight="1"
             android:background="@drawable/mainactivitybuttonright"
-            android:drawableTop="@drawable/helpsomeone"
-            android:layout_gravity="right" />
+            android:clickable="true"
+            android:gravity="center_horizontal"
+            android:layout_gravity="right"
+            >
 
-
-
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView4"
+                android:src="@drawable/helpsomeone"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"/>
+        </LinearLayout>
 
     </LinearLayout>
 
