@@ -54,11 +54,7 @@ public class LoginActivity extends ActionBarActivity {
                 }
                 else ParseUser.logInInBackground(mUsername, mPassword, new LogInCallback() {
                     public void done(ParseUser user, ParseException e) {
-<<<<<<< HEAD
-                        if (user != null) {
-=======
-                        if (e == null) {
->>>>>>> origin/master
+                        if (user != null && e == null) {
                             Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                             startActivity(intent);
                         } else {
