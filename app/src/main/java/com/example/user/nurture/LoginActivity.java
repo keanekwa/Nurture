@@ -1,8 +1,8 @@
 package com.example.user.nurture;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
@@ -53,14 +54,18 @@ public class LoginActivity extends ActionBarActivity {
                     alertMessage("Please fill in the empty fields.");
                     //checks for empty fields
                 }
-                else {
-                    try {
-                        ParseUser.logIn(mUsername, mPassword);
-                    } catch (ParseException e) {
-                        alertMessage("Login failed. Please try again.");
+                else ParseUser.logInInBackground("mUsername", "mPassword", new LogInCallback() {
+                    public void done(ParseUser user, ParseException e) {
+                        if (user != null) {
+                            Intent intent = new Intent(LoginActivit     y.this,MainActivity.class);
+                            startActivity(intent);
+                        } else {
+                            // Signup failed. Look at the ParseException to see what happened.
+                        }
                     }
+                });
             }
-        }});
+        });
     }
 
     @Override
