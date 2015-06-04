@@ -7,10 +7,10 @@
           android:title="Logout"
           android:orderInCategory="101"
           android:showAsAction="ifRoom"
-          android:icon="@drawable/logoutIcon"/>
+          android:icon="@drawable/logouticon"/>
       <item android:id="@+id/action_profile"
           android:title="Profile"
-          android:icon="@drawable/profileIcon"
+          android:icon="@drawable/profileicon"
           android:orderInCategory="102"
           android:showAsAction="ifRoom"/>
 </menu>
