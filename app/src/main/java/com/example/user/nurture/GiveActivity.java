@@ -138,6 +138,7 @@ public class GiveActivity extends ActionBarActivity {
             suggestedTextView.setText(kindnessSuggestion);
 
             Button doItButton = (Button)row.findViewById(R.id.doItButton);
+            doItButton.setText("Do It!");
             doItButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -17,4 +17,7 @@
     <string name="cPass">Confirm Password</string>
     <string name="email">Email</string>
     <string name="subtitle">Do a kind act for someone today</string>
+    <string name="img_test">Test for Image</string>
+    <string name="receive_help">Receive Help</string>
+    <string name="help_someone">Help Someone</string>
 </resources>
