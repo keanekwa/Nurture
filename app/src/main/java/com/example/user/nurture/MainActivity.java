@@ -25,7 +25,7 @@ public class MainActivity extends ActionBarActivity {
     private Button mNewButton;
     private ImageSwitcher mPlantie;
     private TextView mMeter;
-    int imageIDs[]={R.drawable.image1,R.drawable.image2,R.drawable.image3};
+    int imageIDs[]={R.drawable.plant_seed,R.drawable.plant_shoot,R.drawable.seedling};
     int messageCount=imageIDs.length;
     int currentIndex=0;
 
@@ -34,6 +34,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         checkLogin();
+        mPlantie.setImageResource(imageIDs[currentIndex]);
 
         mGiveButton = (Button) findViewById(R.id.GiveButton);
         mReceiveButton = (Button) findViewById(R.id.ReceiveButton);
