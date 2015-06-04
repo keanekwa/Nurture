@@ -19,6 +19,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,12 +92,15 @@ public class GiveActivity extends ActionBarActivity {
                                     }
                                     mAdapter = new SuggestedAdapter(GiveActivity.this, R.layout.suggested_list_item, listOfKindness);
                                     mListView.setAdapter(mAdapter);
+                                    mListView.setVisibility(View.VISIBLE);
                                 }
                             }
                         });
                     }
                     else{
                         mKindnessTextView.setText(userInfo.getString("kindnessToBeDone"));
+                        mKindnessTextView.setVisibility(View.VISIBLE);
+                        mListView.setVisibility(View.GONE);
                     }
                 }
             }
@@ -156,10 +160,16 @@ public class GiveActivity extends ActionBarActivity {
                         @Override
                         public void done(List<ParseObject> parseObjects, ParseException e) {
                             if(e==null && parseObjects.size()==1) {
-                                ParseObject userInfo = parseObjects.get(0);
+                                final ParseObject userInfo = parseObjects.get(0);
                                 userInfo.put("kindnessToBeDone", kindnessSuggestion);
                                 userInfo.put("hasDoneKindness", false);
-                                userInfo.saveInBackground();
+                                userInfo.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        mListView.setVisibility(View.GONE);
+                                        mKindnessTextView.setText(userInfo.getString("kindnessToBeDone")+"\nFor "+userInfo.getString("username"));
+                                    }
+                                });
                             }
                         }
                     });

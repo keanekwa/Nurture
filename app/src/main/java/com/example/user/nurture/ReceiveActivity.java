@@ -60,22 +60,29 @@ public class ReceiveActivity extends ActionBarActivity {
                         public void done(List<ParseUser> users, ParseException e) {
                             if(e==null && users.size()==1){
                                 giver = users.get(0);
-                                mNameTextView.setText(giver.getUsername());
+                                mNameTextView.setText(giverUsername);
                                 mSchoolTextView.setText(giver.getString("school"));
                                 //TODO: profile pic
 
                                 //////////////////////
                                 // set bottom stuff //
                                 //////////////////////
-                                mDoingTextView.setText(giverUserInfo.getString("kindnessToBeDone"));
-                                mDoneButton.setText(giverUsername+" has shown me kindness!");
-                                mDoneButton.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        giverUserInfo.put("hasDoneKindness", true);
-                                        giverUserInfo.saveInBackground();
-                                    }
-                                });
+                                String kindnessToBeDone = giverUserInfo.getString("kindnessToBeDone");
+                                if(kindnessToBeDone==null){
+                                    mDoingTextView.setText("Look out for "+giverUsername+" today!");
+                                    mDoneButton.setVisibility(View.INVISIBLE);
+                                }
+                                else {
+                                    mDoingTextView.setText(kindnessToBeDone);
+                                    mDoneButton.setText(giverUsername + " has shown me kindness!");
+                                    mDoneButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            giverUserInfo.put("hasDoneKindness", true);
+                                            giverUserInfo.saveInBackground();
+                                        }
+                                    });
+                                }
                             }
                         }
                     });
