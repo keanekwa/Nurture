@@ -48,14 +48,15 @@
             android:background="@drawable/mainactivitybuttonleft"
             android:clickable="true"
             android:gravity="center_horizontal"
-            android:padding="10dp">
+            >
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageView3"
-                android:src="@drawable/receivehelp"
-                />
+                android:src="@drawable/receivehelp_1"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"/>
         </LinearLayout>
 
 
