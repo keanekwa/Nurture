@@ -8,14 +8,15 @@
                 android:paddingBottom="@dimen/activity_vertical_margin"
                 tools:context=".MainActivity"
                 android:weightSum="4"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="#3BB94B">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
         android:layout_weight="3"
-        android:weightSum="4"
+        android:weightSum="6"
         >
 
         <ImageSwitcher
@@ -24,7 +25,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:id="@+id/Plant"
-            android:layout_weight="3"
+            android:layout_weight="5"
             >
         </ImageSwitcher>
 
@@ -48,14 +49,14 @@
 
         <Button
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:id="@+id/ReceiveButton"
             android:text="@string/receive_help"
             android:layout_weight="1"
             />
         <Button
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:id="@+id/GiveButton"
             android:text="@string/help_someone"
             android:layout_weight="1"
