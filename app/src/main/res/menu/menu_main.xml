@@ -6,12 +6,14 @@
         android:title="Refresh"
         app:showAsAction="ifRoom"
         android:icon="@drawable/refresh"/>
-    <item android:id="@+id/action_logout"
-          android:title="Logout"
-          app:showAsAction="ifRoom"
-        android:icon="@drawable/logouticon"/>
-      <item android:id="@+id/action_profile_main"
+
+    <item android:id="@+id/action_profile_main"
           android:title="Profile"
           android:icon="@drawable/profileicon"
           app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/action_logout"
+        android:title="Logout"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/logouticon"/>
 </menu>
