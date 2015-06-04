@@ -13,7 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
+import com.parse.SignUpCallback;
 
 import java.util.Arrays;
 import java.util.List;
@@ -76,9 +81,29 @@ public class SignUpActivity extends Activity {
                     userObject.setUsername(usernameInput);
                     userObject.setPassword(passwordInput);
                     userObject.setEmail(emailInput);
-                    userObject.signUpInBackground();
-                    Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                    SignUpActivity.this.startActivity(intent);
+                    userObject.signUpInBackground(new SignUpCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            ParseObject newUserInfo = new ParseObject("userInfo");
+                            newUserInfo.put("username", usernameInput);
+                            newUserInfo.put("hasDoneKindness", false);
+                            newUserInfo.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    ParseUser.logInInBackground(usernameInput, passwordInput, new LogInCallback() {
+                                        public void done(ParseUser user, ParseException e) {
+                                            if (user != null && e == null) {
+                                                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                                                SignUpActivity.this.startActivity(intent);
+                                            } else {
+                                                alertMessage(e.toString());
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
                 }
             }});
 
