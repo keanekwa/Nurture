@@ -52,7 +52,7 @@ public class GiveActivity extends ActionBarActivity {
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
-        actionBar.setTitle("This is who you are giving to.");
+        actionBar.setTitle("You will be helping...");
         actionBar.setDisplayHomeAsUpEnabled(true);
         /////////////////////////////
         // set userBlank "profile" //
