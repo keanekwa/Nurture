@@ -234,6 +234,7 @@ public class MainActivity extends ActionBarActivity {
                     public void onClick(View v) {
                         ParseQuery<ParseObject> query = ParseQuery.getQuery("userInfo");
                         query.whereEqualTo("username", usernameEditText.getText().toString());
+                        query.whereEqualTo("receiver", ParseUser.getCurrentUser().getUsername());
                         query.findInBackground(new FindCallback<ParseObject>() {
                             @Override
                             public void done(List<ParseObject> parseObjects, ParseException e) {
@@ -249,7 +250,7 @@ public class MainActivity extends ActionBarActivity {
                                         }
                                     });
                                 } else {
-                                    alertMessage("This user does not exist! Check the spelling.");
+                                    alertMessage("Error, please check your spelling.");
                                 }
                             }
                         });
