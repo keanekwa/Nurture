@@ -23,7 +23,7 @@
         android:layout_marginLeft="70dp"
         android:layout_marginRight="70dp"
         android:padding="20dp"
-        android:background="@drawable/loginedittextusername"
+        android:background="@drawable/loginedittexttopcurve"
         android:textColor="#fff"
         android:textColorHint="#ecf0f1"
         android:textSize="20sp"/>
@@ -44,7 +44,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginLeft="70dp"
         android:layout_marginRight="70dp"
-        android:background="@drawable/loginedittextpassword"
+        android:background="@drawable/loginedittextbottomcurve"
         android:singleLine="false"
         android:password="false"
         android:textColor="#fff"
