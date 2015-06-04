@@ -44,25 +44,25 @@
         android:weightSum="2">
 
         <Button
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:id="@+id/ReceiveButton"
-            android:text="@string/receive_help"
             android:layout_weight="1"
             android:background="@drawable/mainactivitybuttonleft"
             android:drawableTop="@drawable/receivehelp"
-            android:textSize="30sp"
-            android:textColor="#3BB94B"/>
+            />
+
         <Button
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:id="@+id/GiveButton"
-            android:text="@string/help_someone"
             android:layout_weight="1"
             android:background="@drawable/mainactivitybuttonright"
             android:drawableTop="@drawable/helpsomeone"
-            android:textSize="30sp"
-            android:textColor="#3BB94B"/>
+            android:layout_gravity="right" />
+
+
+
 
     </LinearLayout>
 
