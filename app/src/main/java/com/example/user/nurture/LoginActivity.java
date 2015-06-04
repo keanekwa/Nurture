@@ -57,7 +57,7 @@ public class LoginActivity extends ActionBarActivity {
                 else ParseUser.logInInBackground("mUsername", "mPassword", new LogInCallback() {
                     public void done(ParseUser user, ParseException e) {
                         if (user != null) {
-                            Intent intent = new Intent(LoginActivit     y.this,MainActivity.class);
+                            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                             startActivity(intent);
                         } else {
                             // Signup failed. Look at the ParseException to see what happened.

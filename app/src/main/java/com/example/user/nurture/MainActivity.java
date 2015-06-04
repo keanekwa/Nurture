@@ -22,6 +22,7 @@ public class MainActivity extends ActionBarActivity {
 
     private Button mGiveButton;
     private Button mReceiveButton;
+    private Button mNewButton;
     private ImageSwitcher mPlantie;
     private TextView mMeter;
     int imageIDs[]={R.drawable.image1,R.drawable.image2,R.drawable.image3};
@@ -38,6 +39,7 @@ public class MainActivity extends ActionBarActivity {
         mReceiveButton = (Button) findViewById(R.id.ReceiveButton);
         mPlantie = (ImageSwitcher)findViewById(R.id.Plant);
         mMeter = (TextView) findViewById(R.id.Meter);
+        mNewButton = (Button)findViewById(R.id.NewButton);
         mGiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,15 +50,21 @@ public class MainActivity extends ActionBarActivity {
         mReceiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ReceiveActivity.class);
+                startActivity(intent);
+            }
+        });
+        mNewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 currentIndex++;
                 if(currentIndex==messageCount){
                     currentIndex=0;
                 }
                 mPlantie.setImageResource(imageIDs[currentIndex]);
-                //Intent intent = new Intent(MainActivity.this, ReceiveActivity.class);
-                //startActivity(intent);
             }
         });
+
 
         mPlantie.setFactory(new ViewSwitcher.ViewFactory() {
             @Override
