@@ -45,17 +45,6 @@ public class SignUpActivity extends ActionBarActivity {
         mSchoolBlank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ListSelectorDialog dlg = new ListSelectorDialog(SignUpActivity.this, "Select Your School");
-                String[] array = getResources().getStringArray(R.array.mSchoolList);
-                dlg.show(array, new ListSelectorDialog.listSelectorInterface() {
-                    public void selectorCanceled() {
-                        //Bloop
-                    }
-                    public void selectedItem(String key, String item) {
-                        schoolInput = key;
-                        mSchoolBlank.setText(schoolInput);
-                    }
-                });
                 Dialog();
             }
         });

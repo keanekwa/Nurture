@@ -1,62 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="mSchoolList">"Admiralty Primary School","Ahmad Ibrahim Primary School","Ai
-        Tong School","Alexandra Primary School","Anchor Green Primary School","Anglo-Chinese School
-        (Junior)","Anglo-Chinese School (Primary)","Angsana Primary School", "Balestier Hill Primary
-        School", "Beacon Primary School ", "Bedok Green Primary School", "Bendemeer Primary School",
-        "Blangah Rise Primary School", "Boon Lay Garden Primary School", "Bukit Panjang Primary
-        School", "Bukit Timah Primary School", "Bukit View Primary School", "Canberra Primary
-        School", "Canossa Convent Primary School", "Cantonment Primary School", "Casuarina Primary
-        School", "Catholic High", "Cedar Primary School", "Changkat Primary School", "CHIJ (Katong)
-        Primary School", "CHIJ (Kellock) ", "CHIJ (Our Lady of Good Counsel) ", "CHIJ (Our Lady of
-        the Nativity) ", "CHIJ (Our Lady Queen of Peace) ", "CHIJ Primary (Toa Payoh) ", "Chongfu
-        Primary School", "Chongzheng Primary School", "Chua Chu Kang Primary School", "Clementi
-        Primary School", "Compassvale Primary School", "Concord Primary School", "Coral Primary
-        School", "Corporation Primary School", "Damai Primary School", "Dazhong Primary School", "De
-        La Salle School", "East Coast Primary School", "East Spring Primary School", "East View
-        Primary School", "Edgefield Primary School", "Elias Park Primary School", "Endeavour Primary
-        School", "Eunos Primary School", "Evergreen Primary School", "Fairfield Methodist School
-        (Primary) ", "Farrer Park Primary School", "Fengshan Primary School", "Fernvale Primary
-        School", "First Toa Payoh Primary School", "Frontier Primary School", "Fuchun Primary School
-        ", "Fuhua Primary School", "Gan Eng Seng Primary School", "Geylang Methodist School
-        (Primary) ", "Gongshang Primary School", "Greendale Primary School", "Greenridge Primary
-        School", "Greenwood Primary School", "Guangyang Primary School", "Haig Girls’ School",
-        "Henry Park Primary School", "Holy Innocents’ Primary School", "Hong Wen School", "Horizon
-        Primary School", "Hougang Primary School", "Huamin Primary School", "Innova Primary School
-        ", "Jiemin Primary School", "Junyuan Primary School", "Jurong Primary School", "Jurong West
-        Primary School", "Juying Primary School", "Keming Primary School", "Kheng Cheng School",
-        "Kong Hwa School", "Kranji Primary School", "Kuo Chuan Presbyterian Primary School",
-        "Lakeside Primary Schoolv", "Lianhua Primary School", "Loyang Primary School", "MacPherson
-        Primary School", "Maha Bodhi School", "Maris Stella High (Primary) ", "Marsiling Primary
-        School", "Marymount Convent School", "Mee Toh School", "Meridian Primary School", "Methodist
-        Girls’ School (Primary) ", "Montfort Junior School", "Nan Chiau Primary School", "Nan Hua
-        Primary School", "Nanyang Primary School", "Naval Base Primary School", "New Town Primary
-        School", "Ngee Ann Primary School", "North Spring Primary School", "North View Primary
-        School", "North Vista Primary School", "Northland Primary School", "Northoaks Primary
-        School", "Oasis Primary School", "Opera Estate Primary School", "Palm View Primary School",
-        "Park View Primary School", "Pasir Ris Primary School", "Paya Lebar Methodist Girls’ School
-        (Primary) ", "Pei Chun Public School", "Pei Hwa Presbyterian Primary School", "Pei Tong
-        Primary School", "Peiying Primary School", "Pioneer Primary School", "Poi Ching School",
-        "Princess Elizabeth Primary School", "Punggol Cove Primary School", "Punggol Green Primary
-        School", "Punggol Primary School", "Punggol View Primary School", "Qifa Primary School",
-        "Qihua Primary School", "Queenstown Primary School", "Radin Mas Primary School", "Raffles
-        Girls’ Primary School", "Red Swastika School", "River Valley Primary School", "Riverside
-        Primary School", "Rivervale Primary School", "Rosyth School", "Rulang Primary School",
-        "S’pore Chinese Girls’ (Primary) ", "Sembawang Primary School", "Seng Kang Primary School",
-        "Sengkang Green Primary School", "Shuqun Primary School", "Si Ling Primary School", "South
-        View Primary School", "Springdale Primary School", "St Andrew’s Junior School", "St
-        Anthony’s Canossian Primary School", "St Anthony’s Primary School", "St Gabriel’s Primary
-        School", "St Hilda’s Primary School", "St Joseph’s Institution Junior", "St Margaret’s
-        Primary School", "St Stephen’s School", "Stamford Primary School", "Tampines North Primary
-        School", "Tampines Primary School", "Tanjong Katong Primary School", "Tao Nan School", "Teck
-        Whye Primary School", "Telok Kurau Primary School", "Temasek Primary School", "Unity Primary
-        School", "Waterway Primary School", "Wellington Primary School", "West Grove Primary
-        School", "West Spring Primary School", "West View Primary School", "Westwood Primary
-        School", "White Sands Primary School", "Woodgrove Primary School", "Woodlands Primary
-        School", "Woodlands Ring Primary School", "Xinghua Primary School", "Xingnan Primary
-        School", "Xinmin Primary School", "Xishan Primary School", "Yangzheng Primary School", "Yew
-        Tee Primary School", "Yio Chu Kang Primary School", "Yishun Primary School", "Yu Neng
-        Primary School", "Yuhua Primary School", "Yumin Primary School", "Zhangde Primary School",
-        "Zhenghua Primary School", "Zhonghua Primary School"
+    <string-array name="mSchoolList">
+        <item>Admiralty Primary School</item>
+        <item>Ahmad Ibrahim Primary School</item>
+        <item>Ai Tong School</item>
+        <item>Alexandra Primary School</item>
+        <item>Anchor Green Primary School</item>
+        <item>Anglo-Chinese School (Junior)</item>
+    <item>Anglo-Chinese School (Primary)</item>
+    <item>Angsana Primary School</item>
+    <item>Balestier Hill Primary School</item>
+    <item>Beacon Primary School</item>
+    <item>Bedok Green Primary School</item>
+    <item>Bendemeer Primary School</item>
+    <item>Blangah Rise Primary School</item>
+    <item>Boon Lay Garden Primary School</item>
+    <item>Bukit Panjang Primary School</item>
+<item>Bukit Timah Primary School</item>
+<item>Bukit View Primary School</item><item>Canberra Primary
+        School</item><item>Canossa Convent Primary School</item><item>Cantonment Primary School</item><item>Casuarina Primary
+        School</item><item>Catholic High</item><item>Cedar Primary School</item><item>Changkat Primary School</item><item>CHIJ (Katong)
+        Primary School</item><item>CHIJ (Kellock) </item><item>CHIJ (Our Lady of Good Counsel) </item><item>CHIJ (Our Lady of
+        the Nativity) </item><item>CHIJ (Our Lady Queen of Peace) </item><item>CHIJ Primary (Toa Payoh) </item><item>Chongfu
+        Primary School</item><item>Chongzheng Primary School</item><item>Chua Chu Kang Primary School</item><item>Clementi
+        Primary School</item><item>Compassvale Primary School</item><item>Concord Primary School</item><item>Coral Primary
+        School</item><item>Corporation Primary School</item><item>Damai Primary School</item><item>Dazhong Primary School</item><item>De
+        La Salle School</item><item>East Coast Primary School</item><item>East Spring Primary School</item><item>East View
+        Primary School</item><item>Edgefield Primary School</item><item>Elias Park Primary School</item><item>Endeavour Primary
+        School</item><item>Eunos Primary School</item><item>Evergreen Primary School</item><item>Fairfield Methodist School
+        (Primary) </item><item>Farrer Park Primary School</item><item>Fengshan Primary School</item><item>Fernvale Primary
+        School</item><item>First Toa Payoh Primary School</item><item>Frontier Primary School</item><item>Fuchun Primary School
+        </item><item>Fuhua Primary School</item><item>Gan Eng Seng Primary School</item><item>Geylang Methodist School
+        (Primary) </item><item>Gongshang Primary School</item><item>Greendale Primary School</item><item>Greenridge Primary
+        School</item><item>Greenwood Primary School</item><item>Guangyang Primary School</item><item>Haig Girls’ School",
+        "Henry Park Primary School</item><item>Holy Innocents’ Primary School</item><item>Hong Wen School</item><item>Horizon
+        Primary School</item><item>Hougang Primary School</item><item>Huamin Primary School</item><item>Innova Primary School
+        </item><item>Jiemin Primary School</item><item>Junyuan Primary School</item><item>Jurong Primary School</item><item>Jurong West
+        Primary School</item><item>Juying Primary School</item><item>Keming Primary School</item><item>Kheng Cheng School",
+        "Kong Hwa School</item><item>Kranji Primary School</item><item>Kuo Chuan Presbyterian Primary School",
+        "Lakeside Primary Schoolv</item><item>Lianhua Primary School</item><item>Loyang Primary School</item><item>MacPherson
+        Primary School</item><item>Maha Bodhi School</item><item>Maris Stella High (Primary) </item><item>Marsiling Primary
+        School</item><item>Marymount Convent School</item><item>Mee Toh School</item><item>Meridian Primary School</item><item>Methodist
+        Girls’ School (Primary) </item><item>Montfort Junior School</item><item>Nan Chiau Primary School</item><item>Nan Hua
+        Primary School</item><item>Nanyang Primary School</item><item>Naval Base Primary School</item><item>New Town Primary
+        School</item><item>Ngee Ann Primary School</item><item>North Spring Primary School</item><item>North View Primary
+        School</item><item>North Vista Primary School</item><item>Northland Primary School</item><item>Northoaks Primary
+        School</item><item>Oasis Primary School</item><item>Opera Estate Primary School</item><item>Palm View Primary School",
+        "Park View Primary School</item><item>Pasir Ris Primary School</item><item>Paya Lebar Methodist Girls’ School
+        (Primary) </item><item>Pei Chun Public School</item><item>Pei Hwa Presbyterian Primary School</item><item>Pei Tong
+        Primary School</item><item>Peiying Primary School</item><item>Pioneer Primary School</item><item>Poi Ching School",
+        "Princess Elizabeth Primary School</item><item>Punggol Cove Primary School</item><item>Punggol Green Primary
+        School</item><item>Punggol Primary School</item><item>Punggol View Primary School</item><item>Qifa Primary School",
+        "Qihua Primary School</item><item>Queenstown Primary School</item><item>Radin Mas Primary School</item><item>Raffles
+        Girls’ Primary School</item><item>Red Swastika School</item><item>River Valley Primary School</item><item>Riverside
+        Primary School</item><item>Rivervale Primary School</item><item>Rosyth School</item><item>Rulang Primary School",
+        "S’pore Chinese Girls’ (Primary) </item><item>Sembawang Primary School</item><item>Seng Kang Primary School",
+        "Sengkang Green Primary School</item><item>Shuqun Primary School</item><item>Si Ling Primary School</item><item>South
+        View Primary School</item><item>Springdale Primary School</item><item>St Andrew’s Junior School</item><item>St
+        Anthony’s Canossian Primary School</item><item>St Anthony’s Primary School</item><item>St Gabriel’s Primary
+        School</item><item>St Hilda’s Primary School</item><item>St Joseph’s Institution Junior</item><item>St Margaret’s
+        Primary School</item><item>St Stephen’s School</item><item>Stamford Primary School</item><item>Tampines North Primary
+        School</item><item>Tampines Primary School</item><item>Tanjong Katong Primary School</item><item>Tao Nan School</item><item>Teck
+        Whye Primary School</item><item>Telok Kurau Primary School</item><item>Temasek Primary School</item><item>Unity Primary
+        School</item><item>Waterway Primary School</item><item>Wellington Primary School</item><item>West Grove Primary
+        School</item><item>West Spring Primary School</item><item>West View Primary School</item><item>Westwood Primary
+        School</item><item>White Sands Primary School</item><item>Woodgrove Primary School</item><item>Woodlands Primary
+        School</item><item>Woodlands Ring Primary School</item><item>Xinghua Primary School</item><item>Xingnan Primary
+        School</item><item>Xinmin Primary School</item><item>Xishan Primary School</item><item>Yangzheng Primary School</item><item>Yew
+        Tee Primary School</item><item>Yio Chu Kang Primary School</item><item>Yishun Primary School</item><item>Yu Neng
+        Primary School</item><item>Yuhua Primary School</item><item>Yumin Primary School</item><item>Zhangde Primary School",
+        "Zhenghua Primary School</item><item>Zhonghua Primary School</item>
     </string-array>
 </resources>
