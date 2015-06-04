@@ -163,7 +163,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onResume(){
         super.onResume();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("userInfo");
-        query.whereEqualTo("receiver", ParseUser.getCurrentUser().getUsername());
+        if(ParseUser.getCurrentUser()!=null) query.whereEqualTo("receiver", ParseUser.getCurrentUser().getUsername());
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {

@@ -2,6 +2,7 @@ package com.example.user.nurture;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
@@ -34,14 +35,12 @@ public class GiveActivity extends ActionBarActivity {
     private TextView mNameTextView;
     private TextView mSchoolTextView;
     private TextView mRoleTextView;
-    private TextView mKindnessTextView;
 
     private ArrayAdapter<String> mAdapter;
     private ListView mListView;
     private ArrayList<String> listOfKindness;
 
     private ParseObject curUserInfo;
-    private Button mChangeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +59,9 @@ public class GiveActivity extends ActionBarActivity {
         mRoleTextView = (TextView)findViewById(R.id.roleTextView);
         mListView = (ListView)findViewById(android.R.id.list);
         listOfKindness = new ArrayList<>();
-        mKindnessTextView = (TextView)findViewById(R.id.kindnessTextView);
-        mChangeButton = (Button)findViewById(R.id.changeButton);
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("userInfo");
-        query.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
+        if(ParseUser.getCurrentUser()!=null)query.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
@@ -151,25 +148,29 @@ public class GiveActivity extends ActionBarActivity {
                     for (ParseObject i : parseObjects) {
                         listOfKindness.add(i.getString("kindness"));
                     }
-                    mAdapter = new SuggestedAdapter(GiveActivity.this, R.layout.suggested_list_item, listOfKindness);
+                    mAdapter = new SuggestedAdapter(GiveActivity.this, R.layout.suggested_list_item, listOfKindness, true, "");
                     mListView.setAdapter(mAdapter);
-                    mListView.setVisibility(View.VISIBLE);
-                    mKindnessTextView.setVisibility(View.GONE);
-                    mChangeButton.setVisibility(View.GONE);
                 }
             }
         });
     }
 
     public void setKindnessText(){
-        mKindnessTextView.setText(curUserInfo.getString("kindnessToBeDone") + "\n\nDo this for " + curUserInfo.getString("receiver"));
-        mKindnessTextView.setVisibility(View.VISIBLE);
-        mListView.setVisibility(View.GONE);
-        mChangeButton.setVisibility(View.VISIBLE);
-        mChangeButton.setOnClickListener(new View.OnClickListener() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("suggestedKindness");
+        query.findInBackground(new FindCallback<ParseObject>() {
             @Override
-            public void onClick(View v) {
-                setKindnessList();
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                if (e == null) {
+                    listOfKindness.clear();
+                    for (ParseObject i : parseObjects) {
+                        listOfKindness.add(i.getString("kindness"));
+                    }
+                    String toBeDone = curUserInfo.getString("kindnessToBeDone");
+                    listOfKindness.remove(toBeDone);
+                    listOfKindness.add(0, toBeDone);
+                    mAdapter = new SuggestedAdapter(GiveActivity.this, R.layout.suggested_list_item, listOfKindness, false, toBeDone);
+                    mListView.setAdapter(mAdapter);
+                }
             }
         });
     }
@@ -209,11 +210,15 @@ public class GiveActivity extends ActionBarActivity {
     public class SuggestedAdapter extends ArrayAdapter<String>{
         private int mResource;
         private ArrayList<String> mSuggested;
+        private boolean mIsList;
+        private String mKindnessToDo;
 
-        public SuggestedAdapter(Context context, int resource, ArrayList<String> suggestedKindnesses){
+        public SuggestedAdapter(Context context, int resource, ArrayList<String> suggestedKindnesses, boolean isList, String kindnessToDo){
             super(context, resource, suggestedKindnesses);
             this.mResource = resource;
             this.mSuggested = suggestedKindnesses;
+            this.mIsList = isList;
+            this.mKindnessToDo = kindnessToDo;
         }
 
         @Override
@@ -223,11 +228,33 @@ public class GiveActivity extends ActionBarActivity {
             }
 
             TextView suggestedTextView = (TextView)row.findViewById(R.id.suggestedTextView);
+            TextView doingThisTextView = (TextView)row.findViewById(R.id.doingThisTextView);
             final String kindnessSuggestion = mSuggested.get(position);
             suggestedTextView.setText(kindnessSuggestion);
-
             Button doItButton = (Button)row.findViewById(R.id.doItButton);
-            doItButton.setText("Do It!");
+
+            if(!mIsList && kindnessSuggestion.equals(mKindnessToDo)) {
+                suggestedTextView.setTextColor(Color.WHITE);
+                row.setBackgroundColor(Color.parseColor("#3BB94B"));
+                doItButton.setVisibility(View.GONE);
+                doingThisTextView.setVisibility(View.VISIBLE);
+                doingThisTextView.setText("Doing this!");
+            }
+            else if (!mIsList) {
+                suggestedTextView.setTextColor(Color.parseColor("#6D6D6D"));
+                row.setBackgroundColor(Color.parseColor("#EEEEEE"));
+                doItButton.setText("Do This Instead!");
+                doItButton.setVisibility(View.VISIBLE);
+                doingThisTextView.setVisibility(View.GONE);
+            }
+            else{
+                suggestedTextView.setTextColor(Color.parseColor("#6D6D6D"));
+                row.setBackgroundColor(Color.parseColor("#EEEEEE"));
+                doItButton.setText("Do This!");
+                doItButton.setVisibility(View.VISIBLE);
+                doingThisTextView.setVisibility(View.GONE);
+            }
+
             doItButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
