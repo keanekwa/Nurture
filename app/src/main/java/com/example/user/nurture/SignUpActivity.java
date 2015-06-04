@@ -81,7 +81,6 @@ public class SignUpActivity extends Activity {
                     userObject.setUsername(usernameInput);
                     userObject.setPassword(passwordInput);
                     userObject.setEmail(emailInput);
-                    userObject.put("school", schoolInput);
                     userObject.signUpInBackground(new SignUpCallback() {
                         @Override
                         public void done(ParseException e) {
@@ -89,6 +88,7 @@ public class SignUpActivity extends Activity {
                                 ParseObject newUserInfo = new ParseObject("userInfo");
                                 newUserInfo.put("username", usernameInput);
                                 newUserInfo.put("hasDoneKindness", false);
+                                newUserInfo.put("school", schoolInput);
                                 newUserInfo.saveInBackground(new SaveCallback() {
                                     @Override
                                     public void done(ParseException e) {

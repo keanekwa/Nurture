@@ -36,6 +36,9 @@ public class GiveActivity extends ActionBarActivity {
     private ListView mListView;
     private ArrayList<String> listOfKindness;
 
+    private ParseObject curUserInfo;
+    private Button mChangeButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,10 @@ public class GiveActivity extends ActionBarActivity {
         mProfilePic = (ImageView)findViewById(R.id.profilePic);
         mNameTextView = (TextView)findViewById(R.id.nameTextView);
         mSchoolTextView = (TextView)findViewById(R.id.schoolTextView);
+        mListView = (ListView)findViewById(android.R.id.list);
+        listOfKindness = new ArrayList<>();
+        mKindnessTextView = (TextView)findViewById(R.id.kindnessTextView);
+        mChangeButton = (Button)findViewById(R.id.changeButton);
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("userInfo");
         query.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
@@ -54,69 +61,84 @@ public class GiveActivity extends ActionBarActivity {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
                 if(e==null && parseObjects.size()==1){
-                    ParseObject userInfo = parseObjects.get(0);
-                    String receiverUsername = userInfo.getString("receiver");
+                    curUserInfo = parseObjects.get(0);
+                    String receiverUsername = curUserInfo.getString("receiver");
 
                     if(receiverUsername==null){
-                        ParseQuery<ParseUser> query = ParseUser.getQuery();
-                        query.whereEqualTo("school", ParseUser.getCurrentUser().getString("school"));
-                        query.findInBackground(new FindCallback<ParseUser>() {
+                        ParseQuery<ParseObject> query = ParseQuery.getQuery("userInfo");
+                        query.whereEqualTo("school", curUserInfo.getString("school"));
+                        query.findInBackground(new FindCallback<ParseObject>() {
                             @Override
-                            public void done(List<ParseUser> usersFound, ParseException e) {
-                                if (e == null && usersFound.size()>0) {
-                                    final ArrayList<ParseUser> users = new ArrayList<>(usersFound);
-                                    ParseQuery<ParseObject> query = ParseQuery.getQuery("userInfo");
-                                    //query.whereContainedIn("username", blah);
-                                    //TODO: randomly select a receiver
-                                }
+                            public void done(List<ParseObject> parseObjects, ParseException e) {
+                                final ParseObject theOne = parseObjects.get(randInt(0, parseObjects.size()-1));
+                                curUserInfo.put("receiver", theOne.getString("username"));
+                                curUserInfo.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        setProfile(theOne.getString("username"));
+                                    }
+                                });
                             }
                         });
                     }
                     else {
-                        ParseQuery<ParseObject> query = ParseQuery.getQuery("userInfo");
-                        query.whereEqualTo("username", receiverUsername);
-                        query.findInBackground(new FindCallback<ParseObject>() {
-                            @Override
-                            public void done(List<ParseObject> users, ParseException e) {
-                                if (e == null && users.size() == 1) {
-                                    ParseObject receiverInfo = users.get(0);
-                                    mNameTextView.setText(receiverInfo.getString("username"));
-                                    mSchoolTextView.setText(receiverInfo.getString("school"));
-                                    //TODO: profile pic
-                                }
-                            }
-                        });
+                        setProfile(receiverUsername);
                     }
                     //////////////////
                     // set listview //
                     //////////////////
-                    mListView = (ListView)findViewById(android.R.id.list);
-                    listOfKindness = new ArrayList<>();
-                    mKindnessTextView = (TextView)findViewById(R.id.kindnessTextView);
-
-
-                    if(userInfo.getString("kindnessToBeDone") == null) {
-                        ParseQuery<ParseObject> query1 = ParseQuery.getQuery("suggestedKindness");
-                        query1.findInBackground(new FindCallback<ParseObject>() {
-                            @Override
-                            public void done(List<ParseObject> parseObjects, ParseException e) {
-                                if (e == null) {
-                                    for (ParseObject i : parseObjects) {
-                                        listOfKindness.add(i.getString("kindness"));
-                                    }
-                                    mAdapter = new SuggestedAdapter(GiveActivity.this, R.layout.suggested_list_item, listOfKindness);
-                                    mListView.setAdapter(mAdapter);
-                                    mListView.setVisibility(View.VISIBLE);
-                                }
-                            }
-                        });
-                    }
-                    else{
-                        mKindnessTextView.setText(userInfo.getString("kindnessToBeDone"));
-                        mKindnessTextView.setVisibility(View.VISIBLE);
-                        mListView.setVisibility(View.GONE);
-                    }
+                    if(curUserInfo.getString("kindnessToBeDone") == null) setKindnessList();
+                    else setKindnessText();
                 }
+            }
+        });
+    }
+
+    public void setProfile(String username){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("userInfo");
+        query.whereEqualTo("username", username);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> users, ParseException e) {
+                if (e == null && users.size() == 1) {
+                    ParseObject receiverInfo = users.get(0);
+                    mNameTextView.setText(receiverInfo.getString("username"));
+                    mSchoolTextView.setText(receiverInfo.getString("school"));
+                    //TODO: profile pic
+                }
+            }
+        });
+    }
+
+    public void setKindnessList() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("suggestedKindness");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                if (e == null) {
+                    listOfKindness.clear();
+                    for (ParseObject i : parseObjects) {
+                        listOfKindness.add(i.getString("kindness"));
+                    }
+                    mAdapter = new SuggestedAdapter(GiveActivity.this, R.layout.suggested_list_item, listOfKindness);
+                    mListView.setAdapter(mAdapter);
+                    mListView.setVisibility(View.VISIBLE);
+                    mKindnessTextView.setVisibility(View.GONE);
+                    mChangeButton.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+    public void setKindnessText(){
+        mKindnessTextView.setText(curUserInfo.getString("kindnessToBeDone")+"\n\nDo this for "+curUserInfo.getString("receiver"));
+        mKindnessTextView.setVisibility(View.VISIBLE);
+        mListView.setVisibility(View.GONE);
+        mChangeButton.setVisibility(View.VISIBLE);
+        mChangeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setKindnessList();
             }
         });
     }
@@ -127,9 +149,7 @@ public class GiveActivity extends ActionBarActivity {
         Random rand = new Random();
         // nextInt is normally exclusive of the top value,
         // so add 1 to make it inclusive
-        int randomNum = rand.nextInt((max - min) + 1) + min;
-
-        return randomNum;
+        return rand.nextInt((max - min) + 1) + min;
     }
 
     @Override
@@ -191,8 +211,7 @@ public class GiveActivity extends ActionBarActivity {
                                 userInfo.saveInBackground(new SaveCallback() {
                                     @Override
                                     public void done(ParseException e) {
-                                        mListView.setVisibility(View.GONE);
-                                        mKindnessTextView.setText(userInfo.getString("kindnessToBeDone")+"\nFor "+userInfo.getString("username"));
+                                        setKindnessText();
                                     }
                                 });
                             }
