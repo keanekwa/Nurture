@@ -28,6 +28,14 @@ public class LoginActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+=======
+        //getActionBar().hide();
+>>>>>>> origin/master
+>>>>>>> origin/master
 
         mSignUpTextView = (TextView) findViewById(R.id.signUpTextView);
         mSignUpTextView.setOnClickListener(new View.OnClickListener() {
