@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.parse.ParseUser;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -114,16 +113,16 @@ public class SignUpActivity extends ActionBarActivity {
 
     public void Dialog() {
          AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
-        builder .setTitle("Choose your school")
-                .setItems(R.array.mSchoolList, new DialogInterface.OnClickListener() {
+         builder.setTitle("Choose your school");
+         builder.setItems(R.array.mSchoolList, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         List<String> array = Arrays.asList(getResources().getStringArray(R.array.mSchoolList));
                         schoolInput = array.get(which);
                         mSchoolBlank.setText(schoolInput);
                     }
-                })
-                .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                });
+        builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
 
                     }
