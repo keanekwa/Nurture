@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +34,9 @@ public class AchievementsActivity extends ActionBarActivity {
 
     TextView noAchieves;
     ArrayList <ParseObject> mAchieves = new ArrayList<>();
+    private TextView mNameTextView;
+    private TextView mSchoolTextView;
+    private TextView mRoleTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,51 +44,55 @@ public class AchievementsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_achievements);
         ActionBar actionBar = getSupportActionBar();
 
+        mNameTextView = (TextView)findViewById(R.id.nameTextView);
+        mSchoolTextView = (TextView)findViewById(R.id.schoolTextView);
+        mRoleTextView = (TextView)findViewById(R.id.roleTextView);
+
         assert actionBar != null;
         actionBar.setTitle("Your Badges");
         actionBar.setDisplayHomeAsUpEnabled(true);
-        noAchieves = (TextView) findViewById(R.id.noAchieves);
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("userInfo");
+        query.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> users, ParseException e) {
+                if (e == null && users.size() == 1) {
+                    ParseObject receiverInfo = users.get(0);
+                    mNameTextView.setText(receiverInfo.getString("username"));
+                    mSchoolTextView.setText(receiverInfo.getString("school"));
+                    mRoleTextView.setText(receiverInfo.getString("role"));
+                    //TODO: profile pic
+                }
+            }
+        });
 
 
-                ParseQuery<ParseObject> check = ParseQuery.getQuery("Achievements");
-                check.findInBackground(new FindCallback<ParseObject>() {
-                    @Override
-                    public void done(List<ParseObject> list2, ParseException e) {
-                        if (e == null) {
-                            for (int j = 0; j < list2.size(); j++) {
-                                List usernames = list2.get(j).getList("usernames");
-                                for (int k = 0; k < usernames.size(); k++) {
-                                    if (usernames.get(k).toString().equals(ParseUser.getCurrentUser().getUsername())) {
-                                        mAchieves.add(list2.get(j));
-                                        break;
-                                    }
-                                }
+        ParseQuery<ParseObject> check = ParseQuery.getQuery("Achievements");
+        check.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list2, ParseException e) {
+                if (e == null) {
+                    for (int j = 0; j < list2.size(); j++) {
+                        List usernames = list2.get(j).getList("usernames");
+                        for (int k = 0; k < usernames.size(); k++) {
+                            if (usernames.get(k).toString().equals(ParseUser.getCurrentUser().getUsername())) {
+                                mAchieves.add(list2.get(j));
+                                break;
                             }
-
-
                         }
-
                     }
+                    ListView lvToShow = (ListView)findViewById(R.id.achievesListView);
+                    AchievesAdapter adapter;
+                    adapter = new AchievesAdapter(AchievementsActivity.this, R.layout.list_achieves, mAchieves);
+                    lvToShow.setAdapter(adapter);
 
-                });
+                }
 
+            }
 
+        });
 
-
-        ListView lvToShow = (ListView)findViewById(R.id.achievesListView);
-
-        if (mAchieves.size() == 0){
-            lvToShow.setVisibility(View.GONE);
-            noAchieves.setVisibility(View.VISIBLE);
-        }
-
-        else {
-            lvToShow.setVisibility(View.VISIBLE);
-            noAchieves.setVisibility(View.GONE);
-            ArrayAdapter<ParseObject> adapter;
-            adapter = new AchievesAdapter(this, R.layout.list_achieves, mAchieves);
-            lvToShow.setAdapter(adapter);
-        }
     }
 
     @Override

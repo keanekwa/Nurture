@@ -138,7 +138,7 @@ public class GiveActivity extends ActionBarActivity {
             public void done(List<ParseObject> users, ParseException e) {
                 if (e == null && users.size() == 1) {
                     ParseObject receiverInfo = users.get(0);
-                    mNameTextView.setText(Html.fromHtml(receiverInfo.getString("username")));
+                    mNameTextView.setText(receiverInfo.getString("username"));
                     mSchoolTextView.setText(receiverInfo.getString("school"));
                     mRoleTextView.setText(receiverInfo.getString("role"));
                     //TODO: profile pic
