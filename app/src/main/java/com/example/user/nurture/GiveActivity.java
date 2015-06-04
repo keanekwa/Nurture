@@ -28,6 +28,8 @@ public class GiveActivity extends ActionBarActivity {
     private ImageView mProfilePic;
     private TextView mNameTextView;
     private TextView mSchoolTextView;
+    private TextView mKindnessTextView;
+
     private ArrayAdapter<String> mAdapter;
     private ListView mListView;
     private ArrayList<String> listOfKindness;
@@ -70,26 +72,32 @@ public class GiveActivity extends ActionBarActivity {
                             }
                         }
                     });
-                }
-            }
-        });
+                    //////////////////
+                    // set listview //
+                    //////////////////
+                    mListView = (ListView)findViewById(android.R.id.list);
+                    listOfKindness = new ArrayList<>();
+                    mKindnessTextView = (TextView)findViewById(R.id.kindnessTextView);
 
-        //////////////////
-        // set listview //
-        //////////////////
-        mListView = (ListView)findViewById(android.R.id.list);
-        listOfKindness = new ArrayList<>();
 
-        ParseQuery<ParseObject> query1 = ParseQuery.getQuery("suggestedKindness");
-        query1.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> parseObjects, ParseException e) {
-                if(e==null) {
-                    for (ParseObject i : parseObjects) {
-                        listOfKindness.add(i.getString("kindness"));
+                    if(userInfo.getString("kindnessToBeDone") == null) {
+                        ParseQuery<ParseObject> query1 = ParseQuery.getQuery("suggestedKindness");
+                        query1.findInBackground(new FindCallback<ParseObject>() {
+                            @Override
+                            public void done(List<ParseObject> parseObjects, ParseException e) {
+                                if (e == null) {
+                                    for (ParseObject i : parseObjects) {
+                                        listOfKindness.add(i.getString("kindness"));
+                                    }
+                                    mAdapter = new SuggestedAdapter(GiveActivity.this, R.layout.suggested_list_item, listOfKindness);
+                                    mListView.setAdapter(mAdapter);
+                                }
+                            }
+                        });
                     }
-                    mAdapter = new SuggestedAdapter(GiveActivity.this, R.layout.suggested_list_item, listOfKindness);
-                    mListView.setAdapter(mAdapter);
+                    else{
+                        mKindnessTextView.setText(userInfo.getString("kindnessToBeDone"));
+                    }
                 }
             }
         });

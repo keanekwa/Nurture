@@ -52,7 +52,7 @@ public class ReceiveActivity extends ActionBarActivity {
             public void done(List<ParseObject> parseObjects, ParseException e) {
                 if(e==null && parseObjects.size()==1){
                     final ParseObject giverUserInfo = parseObjects.get(0);
-                    String giverUsername = giverUserInfo.getString("username");
+                    final String giverUsername = giverUserInfo.getString("username");
                     ParseQuery<ParseUser> query = ParseUser.getQuery();
                     query.whereEqualTo("username", giverUsername);
                     query.findInBackground(new FindCallback<ParseUser>() {
@@ -68,6 +68,7 @@ public class ReceiveActivity extends ActionBarActivity {
                                 // set bottom stuff //
                                 //////////////////////
                                 mDoingTextView.setText(giverUserInfo.getString("kindnessToBeDone"));
+                                mDoneButton.setText(giverUsername+" has shown me kindness!");
                                 mDoneButton.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
