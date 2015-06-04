@@ -30,8 +30,6 @@ public class LoginActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //getActionBar().hide();
-
         mSignUpTextView = (TextView) findViewById(R.id.signUpTextView);
         mSignUpTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,16 +52,35 @@ public class LoginActivity extends ActionBarActivity {
                     alertMessage("Please fill in the empty fields.");
                     //checks for empty fields
                 }
+<<<<<<< HEAD
+                else {
+                    ParseUser.logInInBackground("mUsername", "mPassword", new LogInCallback() {
+                        @Override
+                        public void done(ParseUser parseUser, ParseException e) {
+                            if (parseUser != null && e == null) {
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            } else {
+                                alertMessage("Login error.");
+                            }
+                        }
+                    });
+=======
                 else ParseUser.logInInBackground("mUsername", "mPassword", new LogInCallback() {
                     public void done(ParseUser user, ParseException e) {
+<<<<<<< HEAD
                         if (user != null) {
+=======
+                        if (e == null) {
+>>>>>>> origin/master
                             Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                             startActivity(intent);
                         } else {
-                            // Signup failed. Look at the ParseException to see what happened.
+                            alertMessage("Login failed. Please try again.");
                         }
                     }
                 });
+>>>>>>> origin/master
             }
         });
     }

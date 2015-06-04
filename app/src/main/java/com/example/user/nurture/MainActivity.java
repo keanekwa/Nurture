@@ -111,6 +111,11 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+        else if (id == R.id.action_logout) {
+            ParseUser.getCurrentUser().logOut();
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            MainActivity.this.startActivity(intent);
+        }
 
         return super.onOptionsItemSelected(item);
     }
