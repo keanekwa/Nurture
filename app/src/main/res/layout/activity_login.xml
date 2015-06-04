@@ -4,7 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivityActionBar"
-                android:background="#ff33b644"
+                android:background="#3BB94B"
     >
 
     <EditText
@@ -15,36 +15,61 @@
         android:layout_row="1"
         android:layout_column="0"
         android:layout_gravity="center_vertical"
-        android:textSize="30dp"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
+        android:padding="20dp"
+        android:background="@drawable/loginedittextusername"
+        android:textColor="#fff"
+        android:textColorHint="#ecf0f1"
+        android:textSize="20sp"/>
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/passEditText"
+        android:inputType="textPassword"
         android:hint="Password"
         android:layout_row="0"
         android:layout_column="1"
         android:layout_below="@+id/userEditText"
-        android:background="#ffffff"
-        android:layout_alignLeft="@+id/signUpTextView"
-        android:layout_alignStart="@+id/signUpTextView"
-        android:layout_alignRight="@+id/signUpTextView"
-        android:layout_alignEnd="@+id/signUpTextView"
-        android:padding="20dp" />
-
-    <Button
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:text="Login"
-        android:id="@+id/loginButton"
+        android:padding="20dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/passEditText" />
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
+        android:background="@drawable/loginedittextpassword"
+        android:singleLine="false"
+        android:password="false"
+        android:textColor="#fff"
+        android:textColorHint="#ecf0f1"
+        android:textSize="20sp"
+        android:fontFamily="Roboto" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:id="@+id/loginButton"
+        android:layout_below="@+id/passEditText"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
+
+        android:background="@drawable/loginbutton"
+        android:layout_alignRight="@+id/imageView"
+        android:layout_alignEnd="@+id/imageView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#3BB94B"
+        android:textSize="20sp"
+        android:padding="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -54,7 +79,8 @@
         android:id="@+id/signUpTextView"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:textColor="#ffffff"/>
+        android:textColor="#ffffff"
+        android:layout_marginBottom="30dp" />
 
     <ImageView
         android:layout_width="wrap_content"
