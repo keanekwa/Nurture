@@ -2,21 +2,28 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+                android:padding="15dp">
 
     <TextView
         android:id="@+id/suggestedTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
         android:layout_centerVertical="true"
-        tools:text="Make him/her smile :)"/>
+        tools:text="Make him/her smile :)"
+        android:textSize="20sp"
+        />
 
     <Button
-        android:id="@+id/doItButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Do it!"
+        android:id="@+id/doItButton"
         android:layout_alignParentRight="true"
-        tools:text="Do it!"/>
+
+        android:background="@drawable/doitbutton"
+        android:textColor="#FFF"
+        android:textSize="20sp"
+        android:padding="10dp" />
 
 </RelativeLayout>
