@@ -109,14 +109,13 @@
         android:inputType="textEmailAddress"
         android:maxLines="1"/>
 
-    <EditText
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:id="@+id/SchoolBlank"
-        android:hint="School"
+        android:hint="@string/school"
         android:textSize="25dp"
-        android:inputType="textEmailAddress"
         android:maxLines="1"
         android:layout_below="@+id/EmailBlank"
         android:layout_alignParentRight="true"
