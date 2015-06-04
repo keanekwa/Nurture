@@ -36,8 +36,6 @@ public class GiveActivity extends ActionBarActivity {
     private ListView mListView;
     private ArrayList<String> listOfKindness;
 
-    private ParseUser receiver;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,8 +55,8 @@ public class GiveActivity extends ActionBarActivity {
             public void done(List<ParseObject> parseObjects, ParseException e) {
                 if(e==null && parseObjects.size()==1){
                     ParseObject userInfo = parseObjects.get(0);
-                    mNameTextView.setText(userInfo.getString("username"));
-                    mSchoolTextView.setText(userInfo.getString("class"));
+                    mNameTextView.setText("Name:" + " " + userInfo.getString("username"));
+                    mSchoolTextView.setText("School:" + " " + userInfo.getString("school"));
                     //mProfilePic.setImageDrawable(userInfo.getFile("profilepic"));
                     String receiverUsername = parseObjects.get(0).getString("receiver");
                     if(receiverUsername==null){
