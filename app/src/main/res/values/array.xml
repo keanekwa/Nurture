@@ -184,4 +184,8 @@
         <item>Zhenghua Primary School</item>
         <item>Zhonghua Primary School</item>
     </string-array>
+    <string-array name="mRoleList">
+        <item>Student</item>
+        <item>Teacher</item>
+        </string-array>
 </resources>
