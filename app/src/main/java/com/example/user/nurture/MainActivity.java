@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -42,7 +43,6 @@ public class MainActivity extends ActionBarActivity {
     int imageIDs[]={R.drawable.plant_seed,R.drawable.plant_shoot,R.drawable.plant_seedling,R.drawable.plant_small,R.drawable.plant_withered};
     int messageCount=imageIDs.length;
     int currentIndex=0;
-    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,7 @@ public class MainActivity extends ActionBarActivity {
         //mPlantie.setImageResource(imageIDs[currentIndex]);
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
-        actionBar.setTitle("Welcome, " + ParseUser.getCurrentUser().getUsername());
+        if(ParseUser.getCurrentUser()!=null) actionBar.setTitle("Welcome, " + ParseUser.getCurrentUser().getUsername());
         actionBar.setIcon(R.drawable.nurturelogoicon);
 
         mGiveButton = (Button) findViewById(R.id.GiveButton);
@@ -106,17 +106,9 @@ public class MainActivity extends ActionBarActivity {
         mPlantie.setOutAnimation(out);
     }
 
-    private Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            refresh();
-            handler.postDelayed(runnable, 100);
-        }
-    };
-
-    public void refresh(){
+    public void refresh() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("userInfo");
-        query.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
+        if(ParseUser.getCurrentUser()!=null) query.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
@@ -124,7 +116,10 @@ public class MainActivity extends ActionBarActivity {
                     ParseObject userInfo = parseObjects.get(0);
                     if (userInfo.getString("receiver")==null && userInfo.getBoolean("hasDoneKindness")) {
                         userInfo.put("hasDoneKindness", false);
-                        userInfo.put("plantStage", 1+userInfo.getInt("plantStage"));
+                        int currentPlantStage = userInfo.getInt("plantStage");
+                        if(currentPlantStage==messageCount) currentPlantStage = 0;
+                        userInfo.put("plantStage", currentPlantStage+1);
+                        mPlantie.setImageResource(imageIDs[currentPlantStage]);
                     }
                 }
             }
