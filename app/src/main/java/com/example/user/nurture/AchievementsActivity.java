@@ -4,18 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
@@ -27,7 +25,6 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +41,7 @@ public class AchievementsActivity extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
 
         assert actionBar != null;
-        actionBar.setTitle("Your Achievements");
+        actionBar.setTitle("Your Badges");
         actionBar.setDisplayHomeAsUpEnabled(true);
         noAchieves = (TextView) findViewById(R.id.noAchieves);
 
