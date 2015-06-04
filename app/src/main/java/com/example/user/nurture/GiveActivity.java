@@ -56,6 +56,7 @@ public class GiveActivity extends ActionBarActivity {
                 if(e==null && parseObjects.size()==1){
                     ParseObject userInfo = parseObjects.get(0);
                     String receiverUsername = userInfo.getString("receiver");
+
                     if(receiverUsername==null){
                         ParseQuery<ParseUser> query = ParseUser.getQuery();
                         query.whereEqualTo("school", ParseUser.getCurrentUser().getString("school"));
@@ -72,15 +73,15 @@ public class GiveActivity extends ActionBarActivity {
                         });
                     }
                     else {
-                        ParseQuery<ParseUser> query = ParseUser.getQuery();
+                        ParseQuery<ParseObject> query = ParseObject.getQuery("userInfo");
                         query.whereEqualTo("username", receiverUsername);
-                        query.findInBackground(new FindCallback<ParseUser>() {
+                        query.findInBackground(new FindCallback<ParseObject>() {
                             @Override
-                            public void done(List<ParseUser> users, ParseException e) {
+                            public void done(List<ParseObject> users, ParseException e) {
                                 if (e == null && users.size() == 1) {
-                                    ParseUser receiver = users.get(0);
-                                    mNameTextView.setText(receiver.getUsername());
-                                    mSchoolTextView.setText(receiver.getString("school"));
+                                    ParseObject receiverInfo = users.get(0);
+                                    mNameTextView.setText(receiverInfo.getString("username"));
+                                    mSchoolTextView.setText(receiverInfo.getString("school"));
                                     //TODO: profile pic
                                 }
                             }
