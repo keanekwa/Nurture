@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -18,11 +19,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.parse.FindCallback;
+import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -36,13 +39,12 @@ public class MainActivity extends ActionBarActivity {
 
     private Button mGiveButton;
     private Button mReceiveButton;
-    private Button mNewButton;
     private ImageSwitcher mPlantie;
     private TextView mMeter;
     int imageIDs[]={R.drawable.plant_seed,R.drawable.plant_shoot,R.drawable.plant_seedling,R.drawable.plant_small,R.drawable.plant_withered};
     int messageCount=imageIDs.length;
     int currentIndex=0;
-    private Handler handler;
+    private ProgressBar pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,28 +55,19 @@ public class MainActivity extends ActionBarActivity {
         //mPlantie.setImageResource(imageIDs[currentIndex]);
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
-        actionBar.setTitle("Welcome, " + ParseUser.getCurrentUser().getUsername());
+        if(ParseUser.getCurrentUser()!=null) actionBar.setTitle("Welcome, " + ParseUser.getCurrentUser().getUsername());
         actionBar.setIcon(R.drawable.nurturelogoicon);
 
+        pb = (ProgressBar)findViewById(R.id.spinner);
+        pb.setVisibility(View.GONE);
         mGiveButton = (Button) findViewById(R.id.GiveButton);
         mReceiveButton = (Button) findViewById(R.id.ReceiveButton);
         mPlantie = (ImageSwitcher)findViewById(R.id.Plant);
-        mNewButton = (Button)findViewById(R.id.NewButton);
         mGiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, GiveActivity.class);
                 startActivity(intent);
-            }
-        });
-        mNewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentIndex++;
-                if(currentIndex==messageCount){
-                    currentIndex=0;
-                }
-                mPlantie.setImageResource(imageIDs[currentIndex]);
             }
         });
 
@@ -104,19 +97,13 @@ public class MainActivity extends ActionBarActivity {
         // set the animation type to imageSwitcher
         mPlantie.setInAnimation(in);
         mPlantie.setOutAnimation(out);
+        refresh();
     }
 
-    private Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            refresh();
-            handler.postDelayed(runnable, 100);
-        }
-    };
-
-    public void refresh(){
+    public void refresh() {
+        pb.setVisibility(View.VISIBLE);
         ParseQuery<ParseObject> query = ParseQuery.getQuery("userInfo");
-        query.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
+        if(ParseUser.getCurrentUser()!=null) query.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
@@ -124,7 +111,19 @@ public class MainActivity extends ActionBarActivity {
                     ParseObject userInfo = parseObjects.get(0);
                     if (userInfo.getString("receiver")==null && userInfo.getBoolean("hasDoneKindness")) {
                         userInfo.put("hasDoneKindness", false);
-                        userInfo.put("plantStage", 1+userInfo.getInt("plantStage"));
+                        int currentPlantStage = userInfo.getInt("plantStage");
+                        if(currentPlantStage<(messageCount-1)) userInfo.put("plantStage", currentPlantStage+1);
+                        mPlantie.setImageResource(imageIDs[currentPlantStage]);
+                        userInfo.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                pb.setVisibility(View.GONE);
+                            }
+                        });
+                    }
+                    else{
+                        mPlantie.setImageResource(imageIDs[userInfo.getInt("plantStage")]);
+                        pb.setVisibility(View.GONE);
                     }
                 }
             }
@@ -151,9 +150,16 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
         else if (id == R.id.action_logout) {
-            ParseUser.getCurrentUser().logOut();
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            MainActivity.this.startActivity(intent);
+            ParseUser.getCurrentUser().logOutInBackground(new LogOutCallback() {
+                @Override
+                public void done(ParseException e) {
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    MainActivity.this.startActivity(intent);
+                }
+            });
+        }
+        else if (id==R.id.action_refresh){
+            refresh();
         }
 
         return super.onOptionsItemSelected(item);
@@ -162,6 +168,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onResume(){
         super.onResume();
+        pb.setVisibility(View.VISIBLE);
         ParseQuery<ParseObject> query = ParseQuery.getQuery("userInfo");
         if(ParseUser.getCurrentUser()!=null) query.whereEqualTo("receiver", ParseUser.getCurrentUser().getUsername());
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -175,10 +182,12 @@ public class MainActivity extends ActionBarActivity {
                             @Override
                             public void onClick(View v) {
                                 Dialog();
+                                pb.setVisibility(View.GONE);
                             }
                         });
                     } else {
                         mReceiveButton.setEnabled(false);
+                        pb.setVisibility(View.GONE);
                     }
                 }
             }
