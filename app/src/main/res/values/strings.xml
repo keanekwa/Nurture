@@ -21,4 +21,5 @@
     <string name="receive_help">Receive Help</string>
     <string name="help_someone">Help Someone</string>
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <string name="school">School</string>
 </resources>

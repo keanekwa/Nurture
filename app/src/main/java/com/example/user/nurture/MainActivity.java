@@ -137,7 +137,7 @@ public class MainActivity extends ActionBarActivity {
                 if(e==null && parseObjects.size()==1){
                     ParseObject userInfo = parseObjects.get(0);
                     if(userInfo.getString("kindnessToBeDone")!=null && !userInfo.getBoolean("hasDoneKindness")){
-                        mReceiveButton.setVisibility(View.VISIBLE);
+                        mReceiveButton.setEnabled(true);
                         mReceiveButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -146,7 +146,7 @@ public class MainActivity extends ActionBarActivity {
                         });
                     }
                     else{
-                        mReceiveButton.setVisibility(View.INVISIBLE);
+                        mReceiveButton.setEnabled(false);
                     }
                 }
             }
@@ -182,7 +182,7 @@ public class MainActivity extends ActionBarActivity {
                                         @Override
                                         public void done(ParseException e) {
                                             alertMessage(userInfo.getString("username")+"'s kindness has been recorded!");
-                                            mReceiveButton.setVisibility(View.INVISIBLE);
+                                            mReceiveButton.setEnabled(false);
                                         }
                                     });
                                 }
