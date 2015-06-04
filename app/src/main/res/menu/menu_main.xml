@@ -10,7 +10,7 @@
           android:title="Logout"
           app:showAsAction="ifRoom"
         android:icon="@drawable/logouticon"/>
-      <item android:id="@+id/action_profile"
+      <item android:id="@+id/action_profile_main"
           android:title="Profile"
           android:icon="@drawable/profileicon"
           app:showAsAction="ifRoom"/>

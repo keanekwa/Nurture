@@ -159,6 +159,10 @@ public class MainActivity extends ActionBarActivity {
         else if (id==R.id.action_refresh){
             refresh();
         }
+        else if (id==R.id.action_profile_main){
+            Intent intent = new Intent(MainActivity.this, AchievementsActivity.class);
+            MainActivity.this.startActivity(intent);
+        }
 
         return super.onOptionsItemSelected(item);
     }
