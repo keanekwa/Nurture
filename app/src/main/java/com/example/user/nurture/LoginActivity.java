@@ -52,31 +52,16 @@ public class LoginActivity extends ActionBarActivity {
                     alertMessage("Please fill in the empty fields.");
                     //checks for empty fields
                 }
-<<<<<<< HEAD
-                else {
-                    ParseUser.logInInBackground("mUsername", "mPassword", new LogInCallback() {
-                        @Override
-                        public void done(ParseUser parseUser, ParseException e) {
-                            if (parseUser != null && e == null) {
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intent);
-                            } else {
-                                alertMessage("Login error.");
-                            }
-                        }
-                    });
-=======
-                else ParseUser.logInInBackground("mUsername", "mPassword", new LogInCallback() {
+                else ParseUser.logInInBackground(mUsername, mPassword, new LogInCallback() {
                     public void done(ParseUser user, ParseException e) {
                         if (e == null) {
                             Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                             startActivity(intent);
                         } else {
-                            alertMessage("Login failed. Please try again.");
+                            alertMessage(e.toString());
                         }
                     }
                 });
->>>>>>> origin/master
             }
         });
     }
