@@ -35,18 +35,27 @@
         android:text="@string/img_test"
             />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:weightSum="2">
     <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
         android:id="@+id/ReceiveButton"
         android:text="@string/receive_help"
+        android:layout_weight="1"
         />
     <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
         android:id="@+id/GiveButton"
         android:text="@string/help_someone"
+        android:layout_weight="1"
         />
+
+    </LinearLayout>
 
     </LinearLayout>
 </RelativeLayout>

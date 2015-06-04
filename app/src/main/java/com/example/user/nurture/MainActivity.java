@@ -1,20 +1,26 @@
 package com.example.user.nurture;
 
 import android.app.ActionBar;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
+import com.parse.ParseException;
 import com.parse.ParseUser;
 
 
@@ -28,13 +34,18 @@ public class MainActivity extends ActionBarActivity {
     int imageIDs[]={R.drawable.plant_seed,R.drawable.plant_shoot,R.drawable.plant_seedling,R.drawable.plant_small,R.drawable.plant_big};
     int messageCount=imageIDs.length;
     int currentIndex=0;
+    View mTextEntryView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+<<<<<<< HEAD
         checkLogin();
         //mPlantie.setImageResource(imageIDs[0]);
+=======
+        //mPlantie.setImageResource(imageIDs[currentIndex]);
+>>>>>>> origin/master
 
         mGiveButton = (Button) findViewById(R.id.GiveButton);
         mReceiveButton = (Button) findViewById(R.id.ReceiveButton);
@@ -121,15 +132,45 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void checkLogin(){
-        //checks if userBlank is logged in
-        if (ParseUser.getCurrentUser()==null)
-        {
-            Intent intent = new Intent (this, LoginActivity.class);
-            this.startActivity(intent);
+    public void Dialog() {
+        LayoutInflater factory = LayoutInflater.from(this);
+        mTextEntryView = factory.inflate(R.layout.addreceiver_dialog_text_entry, null);
+
+        new AlertDialog.Builder(this)
+                .setIcon(R.drawable.nurturelogowhite)
+                .setTitle("Who helped you?")
+                .setView(mTextEntryView)
+
+                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        positiveButton();
+                    }
+                })
+                .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                    }
+                })
+                .show();
+    }
+
+    public void positiveButton()
+    {
+        EditText mUsernameField = (EditText) mTextEntryView.findViewById(R.id.helperUsernameEditText);
+        String usernameInput = mUsernameField.getText().toString();
+        if (usernameInput.equals("")){
+            alertMessage("Please fill in the empty field.");
+            //checks for empty fields
+        }
+        else {
+            //TODO: Use ParseQuery and check the username.
 
         }
-
-
     }
+
+    public void alertMessage(String Message)
+    {
+        Toast.makeText(MainActivity.this, Message, Toast.LENGTH_SHORT).show();
+    }
+
 }
