@@ -73,7 +73,7 @@ public class GiveActivity extends ActionBarActivity {
                         });
                     }
                     else {
-                        ParseQuery<ParseObject> query = ParseObject.getQuery("userInfo");
+                        ParseQuery<ParseObject> query = ParseQuery.getQuery("userInfo");
                         query.whereEqualTo("username", receiverUsername);
                         query.findInBackground(new FindCallback<ParseObject>() {
                             @Override
