@@ -39,6 +39,9 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //mPlantie.setImageResource(imageIDs[0]);
+
+        //mPlantie.setImageResource(imageIDs[currentIndex]);
 
         mGiveButton = (Button) findViewById(R.id.GiveButton);
         mReceiveButton = (Button) findViewById(R.id.ReceiveButton);
@@ -129,7 +132,7 @@ public class MainActivity extends ActionBarActivity {
         mTextEntryView = factory.inflate(R.layout.addreceiver_dialog_text_entry, null);
 
         new AlertDialog.Builder(this)
-                .setIcon(R.drawable.nurturelogowhite)
+                .setIcon(R.drawable.nurturelogoicon)
                 .setTitle("Who helped you?")
                 .setView(mTextEntryView)
 
