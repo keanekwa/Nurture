@@ -19,11 +19,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.parse.FindCallback;
+import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -43,6 +45,7 @@ public class MainActivity extends ActionBarActivity {
     int imageIDs[]={R.drawable.plant_seed,R.drawable.plant_shoot,R.drawable.plant_seedling,R.drawable.plant_small,R.drawable.plant_withered};
     int messageCount=imageIDs.length;
     int currentIndex=0;
+    private ProgressBar pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,8 @@ public class MainActivity extends ActionBarActivity {
         if(ParseUser.getCurrentUser()!=null) actionBar.setTitle("Welcome, " + ParseUser.getCurrentUser().getUsername());
         actionBar.setIcon(R.drawable.nurturelogoicon);
 
+        pb = (ProgressBar)findViewById(R.id.spinner);
+        pb.setVisibility(View.GONE);
         mGiveButton = (Button) findViewById(R.id.GiveButton);
         mReceiveButton = (Button) findViewById(R.id.ReceiveButton);
         mPlantie = (ImageSwitcher)findViewById(R.id.Plant);
@@ -104,9 +109,11 @@ public class MainActivity extends ActionBarActivity {
         // set the animation type to imageSwitcher
         mPlantie.setInAnimation(in);
         mPlantie.setOutAnimation(out);
+        refresh();
     }
 
     public void refresh() {
+        pb.setVisibility(View.VISIBLE);
         ParseQuery<ParseObject> query = ParseQuery.getQuery("userInfo");
         if(ParseUser.getCurrentUser()!=null) query.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -120,6 +127,16 @@ public class MainActivity extends ActionBarActivity {
                         if(currentPlantStage==messageCount) currentPlantStage = 0;
                         userInfo.put("plantStage", currentPlantStage+1);
                         mPlantie.setImageResource(imageIDs[currentPlantStage]);
+                        userInfo.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                pb.setVisibility(View.GONE);
+                            }
+                        });
+                    }
+                    else{
+                        mPlantie.setImageResource(imageIDs[userInfo.getInt("plantStage")]);
+                        pb.setVisibility(View.GONE);
                     }
                 }
             }
@@ -146,9 +163,16 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
         else if (id == R.id.action_logout) {
-            ParseUser.getCurrentUser().logOut();
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            MainActivity.this.startActivity(intent);
+            ParseUser.getCurrentUser().logOutInBackground(new LogOutCallback() {
+                @Override
+                public void done(ParseException e) {
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    MainActivity.this.startActivity(intent);
+                }
+            });
+        }
+        else if (id==R.id.action_refresh){
+            refresh();
         }
 
         return super.onOptionsItemSelected(item);
