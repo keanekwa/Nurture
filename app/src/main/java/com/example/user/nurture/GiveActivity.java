@@ -1,6 +1,5 @@
 package com.example.user.nurture;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -173,8 +172,6 @@ public class GiveActivity extends ActionBarActivity {
                         listOfKindness.add(i.getString("kindness"));
                     }
                     String toBeDone = curUserInfo.getString("kindnessToBeDone");
-                    listOfKindness.remove(toBeDone);
-                    listOfKindness.add(0, toBeDone);
                     mAdapter = new SuggestedAdapter(GiveActivity.this, R.layout.suggested_list_item, listOfKindness, false, toBeDone);
                     mListView.setAdapter(mAdapter);
                 }
@@ -242,7 +239,7 @@ public class GiveActivity extends ActionBarActivity {
 
             if(!mIsList && kindnessSuggestion.equals(mKindnessToDo)) {
                 suggestedTextView.setTextColor(Color.WHITE);
-                row.setBackgroundColor(Color.parseColor("#3BB94B"));
+                row.setBackgroundColor(Color.parseColor("#009688"));
                 doItButton.setVisibility(View.GONE);
                 doingThisTextView.setVisibility(View.VISIBLE);
                 doingThisTextView.setText("Doing this!");
