@@ -28,7 +28,6 @@ public class LoginActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        //getActionBar().hide();
 
         mSignUpTextView = (TextView) findViewById(R.id.signUpTextView);
         mSignUpTextView.setOnClickListener(new View.OnClickListener() {
@@ -41,13 +40,13 @@ public class LoginActivity extends ActionBarActivity {
 
         user = (EditText) findViewById(R.id.userEditText);
         pass = (EditText) findViewById(R.id.passEditText);
-        mUsername = user.getText().toString();
-        mPassword = pass.getText().toString();
 
         mLogin = (Button) findViewById(R.id.loginButton);
         mLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mUsername = user.getText().toString();
+                mPassword = pass.getText().toString();
                 if (mUsername.equals("") | mPassword.equals("")){
                     alertMessage("Please fill in the empty fields.");
                     //checks for empty fields
