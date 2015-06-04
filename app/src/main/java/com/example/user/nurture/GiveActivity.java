@@ -3,6 +3,7 @@ package com.example.user.nurture;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -102,7 +103,7 @@ public class GiveActivity extends ActionBarActivity {
             public void done(List<ParseObject> users, ParseException e) {
                 if (e == null && users.size() == 1) {
                     ParseObject receiverInfo = users.get(0);
-                    mNameTextView.setText(receiverInfo.getString("username"));
+                    mNameTextView.setText(Html.fromHtml(receiverInfo.getString("username")));
                     mSchoolTextView.setText(receiverInfo.getString("school"));
                     //TODO: profile pic
                 }
