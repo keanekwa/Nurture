@@ -1,15 +1,23 @@
 package com.example.user.nurture;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.parse.ParseUser;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    private Button mGiveButton;
+    private Button mReceiveButton;
+    private TextView mPlantImage;
+    private TextView mMeter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +25,24 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         checkLogin();
 
+        mGiveButton = (Button) findViewById(R.id.GiveButton);
+        mReceiveButton = (Button) findViewById(R.id.ReceiveButton);
+        mPlantImage = (TextView) findViewById(R.id.Plant);
+        mMeter = (TextView) findViewById(R.id.Meter);
+        mGiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, GiveActivity.class);
+                startActivity(intent);
+            }
+        });
+        mReceiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ReceiveActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
