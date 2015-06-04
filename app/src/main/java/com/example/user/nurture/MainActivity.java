@@ -199,17 +199,9 @@ public class MainActivity extends ActionBarActivity {
 
         final EditText usernameEditText = (EditText)mTextEntryView.findViewById(R.id.helperUsernameEditText);
         builder.setTitle("Who showed you kindness today?");
-        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-            }
-        });
+        builder.setPositiveButton("Confirm", null);
+        builder.setNegativeButton("Cancel", null);
         final AlertDialog alert = builder.create();
-        alert.show();
-
         alert.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialog) {
@@ -249,6 +241,7 @@ public class MainActivity extends ActionBarActivity {
                 });
             }
         });
+        alert.show();
     }
 
     public void alertMessage(String Message)
