@@ -45,12 +45,13 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //mPlantie.setImageResource(imageIDs[0]);
+
         //mPlantie.setImageResource(imageIDs[currentIndex]);
 
         mGiveButton = (Button) findViewById(R.id.GiveButton);
         mReceiveButton = (Button) findViewById(R.id.ReceiveButton);
         mPlantie = (ImageSwitcher)findViewById(R.id.Plant);
-        mMeter = (TextView) findViewById(R.id.Meter);
         mNewButton = (Button)findViewById(R.id.NewButton);
         mGiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,8 +160,12 @@ public class MainActivity extends ActionBarActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(mTextEntryView);
 
+        new AlertDialog.Builder(this)
+                .setIcon(R.drawable.nurturelogoicon)
+                .setTitle("Who helped you?")
+                .setView(mTextEntryView);
+
         final EditText usernameEditText = (EditText)mTextEntryView.findViewById(R.id.helperUsernameEditText);
-        TextView title = (TextView)mTextEntryView.findViewById(R.id.title);
         builder.setTitle("Who showed you kindness today?");
         builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
