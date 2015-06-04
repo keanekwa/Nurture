@@ -4,8 +4,6 @@ import android.app.ActionBar;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -19,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,7 +37,7 @@ import java.util.List;
 public class MainActivity extends ActionBarActivity {
 
     private Button mGiveButton;
-    private Button mReceiveButton;
+    private LinearLayout mReceiveButton;
     private ImageSwitcher mPlantie;
     private TextView mMeter;
     int imageIDs[]={R.drawable.plant_seed,R.drawable.plant_shoot,R.drawable.plant_seedling,R.drawable.plant_small,R.drawable.plant_withered};
@@ -61,7 +60,7 @@ public class MainActivity extends ActionBarActivity {
         pb = (ProgressBar)findViewById(R.id.spinner);
         pb.setVisibility(View.GONE);
         mGiveButton = (Button) findViewById(R.id.GiveButton);
-        mReceiveButton = (Button) findViewById(R.id.ReceiveButton);
+        mReceiveButton = (LinearLayout) findViewById(R.id.ReceiveButton);
         mPlantie = (ImageSwitcher)findViewById(R.id.Plant);
         mGiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,8 +119,7 @@ public class MainActivity extends ActionBarActivity {
                                 pb.setVisibility(View.GONE);
                             }
                         });
-                    }
-                    else{
+                    } else {
                         mPlantie.setImageResource(imageIDs[userInfo.getInt("plantStage")]);
                         pb.setVisibility(View.GONE);
                     }
