@@ -3,6 +3,8 @@ package com.example.user.nurture;
 import android.app.ActionBar;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
@@ -10,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -40,6 +43,8 @@ public class MainActivity extends ActionBarActivity {
     private LinearLayout mReceiveButton;
     private ImageSwitcher mPlantie;
     private TextView mMeter;
+    private ImageView mGiveImage;
+    private ImageView mReceiveImage;
     int imageIDs[]={R.drawable.plant_seed,R.drawable.plant_shoot,R.drawable.plant_seedling,R.drawable.plant_small,R.drawable.plant_withered};
     int messageCount=imageIDs.length;
     int currentIndex=0;
@@ -61,6 +66,8 @@ public class MainActivity extends ActionBarActivity {
         pb.setVisibility(View.GONE);
         mGiveButton = (LinearLayout) findViewById(R.id.GiveButton);
         mReceiveButton = (LinearLayout) findViewById(R.id.ReceiveButton);
+        mGiveImage = (ImageView) findViewById(R.id.giveImage);
+        mReceiveImage = (ImageView) findViewById(R.id.receiveImage);
         mPlantie = (ImageSwitcher)findViewById(R.id.Plant);
         mGiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +76,6 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
-
 
         mPlantie.setFactory(new ViewSwitcher.ViewFactory() {
             @Override
@@ -180,11 +186,27 @@ public class MainActivity extends ActionBarActivity {
                     ParseObject userInfo = parseObjects.get(0);
                     if (userInfo.getString("kindnessToBeDone") != null && !userInfo.getBoolean("hasDoneKindness")) {
                         mReceiveButton.setEnabled(true);
-                        mReceiveButton.setOnClickListener(new View.OnClickListener() {
+                        mReceiveButton.setOnClickListener(new View.OnTouchListener() {
                             @Override
-                            public void onClick(View v) {
+                            public boolean onTouch(View v, MotionEvent event) {
+                                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                                    mReceiveImage.setImageDrawable(getDrawable(R.drawable.receivehelp));
+                                }
+                                if (event.getAction() == MotionEvent.ACTION_UP) {
+                                    mReceiveButton.setColorFilter(Color.argb(0, 0, 0, 0));
+                                }
+                                return false;
+
                                 Dialog();
                                 pb.setVisibility(View.GONE);
+                            }
+                        });
+                        final ImageView image = (ImageView) findViewById(R.id.my_image);
+                        placeImage.setOnTouchListener(new View.OnTouchListener() {
+                            private Rect rect;
+
+
+
                             }
                         });
                     } else {

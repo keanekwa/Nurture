@@ -53,7 +53,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageView3"
+                android:id="@+id/receiveImage"
                 android:src="@drawable/receivehelp"
                 android:scaleType="fitXY"
                 android:adjustViewBounds="true"/>
@@ -74,7 +74,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageView4"
+                android:id="@+id/giveImage"
                 android:src="@drawable/helpsomeone"
                 android:scaleType="fitXY"
                 android:adjustViewBounds="true"/>
