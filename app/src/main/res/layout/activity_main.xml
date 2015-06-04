@@ -2,10 +2,6 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                android:paddingBottom="@dimen/activity_vertical_margin"
                 tools:context=".MainActivity"
                 android:weightSum="4"
                 android:orientation="vertical"
@@ -54,14 +50,20 @@
             android:id="@+id/ReceiveButton"
             android:text="@string/receive_help"
             android:layout_weight="1"
-            />
+            android:background="@drawable/mainactivitybuttonleft"
+            android:drawableTop="@drawable/receivehelp"
+            android:textSize="30sp"
+            android:textColor="#3BB94B"/>
         <Button
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:id="@+id/GiveButton"
             android:text="@string/help_someone"
             android:layout_weight="1"
-            />
+            android:background="@drawable/mainactivitybuttonright"
+            android:drawableTop="@drawable/helpsomeone"
+            android:textSize="30sp"
+            android:textColor="#3BB94B"/>
 
     </LinearLayout>
 
