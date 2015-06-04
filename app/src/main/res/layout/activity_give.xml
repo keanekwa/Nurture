@@ -45,11 +45,11 @@
                     tools:text="Name"
                     android:layout_weight="1"/>
                 <TextView
-                    android:id="@+id/classTextView"
+                    android:id="@+id/schoolTextView"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:gravity="center_vertical|left"
-                    tools:text="Class"
+                    tools:text="School"
                     android:layout_weight="1"/>
 
                 </LinearLayout>
