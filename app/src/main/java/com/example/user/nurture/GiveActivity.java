@@ -81,7 +81,7 @@ public class GiveActivity extends ActionBarActivity {
                         query.findInBackground(new FindCallback<ParseObject>() {
                             @Override
                             public void done(List<ParseObject> parseObjects, ParseException e) {
-                                if(e==null && parseObjects.size()>0) {
+                                if(e==null && parseObjects.size()>1) {
                                     parseObjects.remove(curUserInfo);
                                     final ParseObject theOne = parseObjects.get(randInt(0, parseObjects.size() - 1));
                                     curUserInfo.put("receiver", theOne.getString("username"));
@@ -93,7 +93,7 @@ public class GiveActivity extends ActionBarActivity {
                                         }
                                     });
                                 }
-                                else if(e==null && parseObjects.size()==0){
+                                else if(e==null && parseObjects.size()==1){
                                     ParseQuery<ParseObject> query = ParseQuery.getQuery("userInfo");
                                     query.findInBackground(new FindCallback<ParseObject>() {
                                         @Override
