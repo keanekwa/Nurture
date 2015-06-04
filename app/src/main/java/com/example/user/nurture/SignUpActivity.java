@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +15,6 @@ import android.widget.Toast;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class SignUpActivity extends ActionBarActivity {
@@ -75,7 +73,7 @@ public class SignUpActivity extends ActionBarActivity {
                     userObject.setPassword(passwordInput);
                     userObject.setEmail(emailInput);
                     userObject.signUpInBackground();
-                    Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                     SignUpActivity.this.startActivity(intent);
                 }
             }});

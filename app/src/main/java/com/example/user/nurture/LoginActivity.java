@@ -1,8 +1,8 @@
 package com.example.user.nurture;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
@@ -28,8 +29,6 @@ public class LoginActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        //getActionBar().hide();
 
         mSignUpTextView = (TextView) findViewById(R.id.signUpTextView);
         mSignUpTextView.setOnClickListener(new View.OnClickListener() {
@@ -54,11 +53,17 @@ public class LoginActivity extends ActionBarActivity {
                     //checks for empty fields
                 }
                 else {
-                    try {
-                        ParseUser.logIn(mUsername, mPassword);
-                    } catch (ParseException e) {
-                        alertMessage("Login failed. Please try again.");
-                    }
+                    ParseUser.logInInBackground("mUsername", "mPassword", new LogInCallback() {
+                        @Override
+                        public void done(ParseUser parseUser, ParseException e) {
+                            if (parseUser != null && e == null) {
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            } else {
+                                alertMessage("Login error.");
+                            }
+                        }
+                    });
             }
         }});
     }
