@@ -3,8 +3,6 @@ package com.example.user.nurture;
 import android.app.ActionBar;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
@@ -186,27 +184,18 @@ public class MainActivity extends ActionBarActivity {
                     ParseObject userInfo = parseObjects.get(0);
                     if (userInfo.getString("kindnessToBeDone") != null && !userInfo.getBoolean("hasDoneKindness")) {
                         mReceiveButton.setEnabled(true);
-                        mReceiveButton.setOnClickListener(new View.OnTouchListener() {
+                        mReceiveButton.setOnTouchListener(new View.OnTouchListener() {
                             @Override
                             public boolean onTouch(View v, MotionEvent event) {
                                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                                    mReceiveImage.setImageDrawable(getDrawable(R.drawable.receivehelp));
+                                    mReceiveImage.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.receivehelp_3));
                                 }
                                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                                    mReceiveButton.setColorFilter(Color.argb(0, 0, 0, 0));
+                                    mReceiveImage.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.receivehelp));
                                 }
-                                return false;
-
                                 Dialog();
                                 pb.setVisibility(View.GONE);
-                            }
-                        });
-                        final ImageView image = (ImageView) findViewById(R.id.my_image);
-                        placeImage.setOnTouchListener(new View.OnTouchListener() {
-                            private Rect rect;
-
-
-
+                                return false;
                             }
                         });
                     } else {
