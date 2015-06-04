@@ -20,8 +20,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
+import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
+import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -34,7 +40,6 @@ public class MainActivity extends ActionBarActivity {
     int imageIDs[]={R.drawable.plant_seed,R.drawable.plant_shoot,R.drawable.plant_seedling,R.drawable.plant_small,R.drawable.plant_big};
     int messageCount=imageIDs.length;
     int currentIndex=0;
-    View mTextEntryView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +56,6 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, GiveActivity.class);
-                startActivity(intent);
-            }
-        });
-        mReceiveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ReceiveActivity.class);
                 startActivity(intent);
             }
         });
@@ -127,41 +125,77 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("userInfo");
+        query.whereEqualTo("receiver", ParseUser.getCurrentUser().getUsername());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                if(e==null && parseObjects.size()==1){
+                    ParseObject userInfo = parseObjects.get(0);
+                    if(userInfo.getString("kindnessToBeDone")!=null && !userInfo.getBoolean("hasDoneKindness")){
+                        mReceiveButton.setVisibility(View.VISIBLE);
+                        mReceiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                            Dialog();
+                            }
+                        });
+                    }
+                    else{
+                        mReceiveButton.setVisibility(View.INVISIBLE);
+                    }
+                }
+            }
+        });
+    }
+
     public void Dialog() {
-        LayoutInflater factory = LayoutInflater.from(this);
-        mTextEntryView = factory.inflate(R.layout.addreceiver_dialog_text_entry, null);
+        LayoutInflater li = LayoutInflater.from(MainActivity.this);
+        View mTextEntryView = li.inflate(R.layout.addreceiver_dialog_text_entry, null);
 
-        new AlertDialog.Builder(this)
-                .setIcon(R.drawable.nurturelogowhite)
-                .setTitle("Who helped you?")
-                .setView(mTextEntryView)
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(mTextEntryView);
 
-                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+        final EditText usernameEditText = (EditText)mTextEntryView.findViewById(R.id.helperUsernameEditText);
+        TextView title = (TextView)mTextEntryView.findViewById(R.id.title);
+        builder.setTitle("Who showed you kindness today?");
+        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        positiveButton();
+                        //TODO: check this
+                        ParseQuery<ParseObject> query = ParseQuery.getQuery("userInfo");
+                        query.whereEqualTo("username", usernameEditText.getText().toString());
+                        query.findInBackground(new FindCallback<ParseObject>() {
+                            @Override
+                            public void done(List<ParseObject> parseObjects, ParseException e) {
+                                if(e==null && parseObjects.size()==1){
+                                    final ParseObject userInfo = parseObjects.get(0);
+                                    userInfo.put("hasDoneKindness", true);
+                                    userInfo.saveInBackground(new SaveCallback() {
+                                        @Override
+                                        public void done(ParseException e) {
+                                            alertMessage(userInfo.getString("username")+"'s kindness has been recorded!");
+                                            mReceiveButton.setVisibility(View.INVISIBLE);
+                                        }
+                                    });
+                                }
+
+                                else {
+                                    alertMessage("This user does not exist! Check the spelling.");
+                                }
+                            }
+                        });
                     }
                 })
-                .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-
                     }
-                })
-                .show();
+                });
+        builder.create().show();
     }
 
-    public void positiveButton()
-    {
-        EditText mUsernameField = (EditText) mTextEntryView.findViewById(R.id.helperUsernameEditText);
-        String usernameInput = mUsernameField.getText().toString();
-        if (usernameInput.equals("")){
-            alertMessage("Please fill in the empty field.");
-            //checks for empty fields
-        }
-        else {
-            //TODO: Use ParseQuery and check the username.
-
-        }
-    }
 
     public void alertMessage(String Message)
     {
