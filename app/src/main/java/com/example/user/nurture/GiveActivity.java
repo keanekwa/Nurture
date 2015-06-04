@@ -23,6 +23,7 @@ import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class GiveActivity extends ActionBarActivity {
@@ -40,9 +41,9 @@ public class GiveActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_give);
 
-        ////////////////////////
+        /////////////////////////////
         // set userBlank "profile" //
-        ////////////////////////
+        /////////////////////////////
         mProfilePic = (ImageView)findViewById(R.id.profilePic);
         mNameTextView = (TextView)findViewById(R.id.nameTextView);
         mSchoolTextView = (TextView)findViewById(R.id.schoolTextView);
@@ -57,6 +58,37 @@ public class GiveActivity extends ActionBarActivity {
                     mNameTextView.setText("Name:" + " " + userInfo.getString("username"));
                     mSchoolTextView.setText("School:" + " " + userInfo.getString("school"));
                     //mProfilePic.setImageDrawable(userInfo.getFile("profilepic"));
+                    String receiverUsername = parseObjects.get(0).getString("receiver");
+                    if(receiverUsername==null){
+                        ParseQuery<ParseUser> query = ParseUser.getQuery();
+                        query.whereEqualTo("school", ParseUser.getCurrentUser().getString("school"));
+                        query.findInBackground(new FindCallback<ParseUser>() {
+                            @Override
+                            public void done(List<ParseUser> users, ParseException e) {
+                                if (e == null && users.size()>0) {
+                                    for (ParseUser i : users){
+                                        
+                                    }
+                                    //TODO: randomly select a receiver
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        ParseQuery<ParseUser> query = ParseUser.getQuery();
+                        query.whereEqualTo("username", receiverUsername);
+                        query.findInBackground(new FindCallback<ParseUser>() {
+                            @Override
+                            public void done(List<ParseUser> users, ParseException e) {
+                                if (e == null && users.size() == 1) {
+                                    receiver = users.get(0);
+                                    mNameTextView.setText(receiver.getUsername());
+                                    mSchoolTextView.setText(receiver.getString("school"));
+                                    //TODO: profile pic
+                                }
+                            }
+                        });
+                    }
                     //////////////////
                     // set listview //
                     //////////////////
@@ -89,6 +121,17 @@ public class GiveActivity extends ActionBarActivity {
                 }
             }
         });
+    }
+
+    public static int randInt(int min, int max) {
+        // NOTE: Usually this should be a field rather than a method
+        // variable so that it is not re-seeded every call.
+        Random rand = new Random();
+        // nextInt is normally exclusive of the top value,
+        // so add 1 to make it inclusive
+        int randomNum = rand.nextInt((max - min) + 1) + min;
+
+        return randomNum;
     }
 
     @Override
