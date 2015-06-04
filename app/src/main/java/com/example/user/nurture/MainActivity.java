@@ -112,8 +112,7 @@ public class MainActivity extends ActionBarActivity {
                     if (userInfo.getString("receiver")==null && userInfo.getBoolean("hasDoneKindness")) {
                         userInfo.put("hasDoneKindness", false);
                         int currentPlantStage = userInfo.getInt("plantStage");
-                        if(currentPlantStage==messageCount) currentPlantStage = 0;
-                        userInfo.put("plantStage", currentPlantStage+1);
+                        if(currentPlantStage<(messageCount-1)) userInfo.put("plantStage", currentPlantStage+1);
                         mPlantie.setImageResource(imageIDs[currentPlantStage]);
                         userInfo.saveInBackground(new SaveCallback() {
                             @Override

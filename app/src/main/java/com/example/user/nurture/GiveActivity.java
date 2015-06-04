@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
@@ -41,6 +42,7 @@ public class GiveActivity extends ActionBarActivity {
     private ArrayList<String> listOfKindness;
 
     private ParseObject curUserInfo;
+    private ProgressBar pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,8 @@ public class GiveActivity extends ActionBarActivity {
         mRoleTextView = (TextView)findViewById(R.id.roleTextView);
         mListView = (ListView)findViewById(android.R.id.list);
         listOfKindness = new ArrayList<>();
+        pb = (ProgressBar)findViewById(R.id.spinner);
+        pb.setVisibility(View.VISIBLE);
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("userInfo");
         if(ParseUser.getCurrentUser()!=null)query.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
@@ -83,6 +87,7 @@ public class GiveActivity extends ActionBarActivity {
                                         @Override
                                         public void done(ParseException e) {
                                             setProfile(theOne.getString("username"));
+                                            pb.setVisibility(View.GONE);
                                         }
                                     });
                                 }
@@ -99,6 +104,7 @@ public class GiveActivity extends ActionBarActivity {
                                                     @Override
                                                     public void done(ParseException e) {
                                                         setProfile(theOne.getString("username"));
+                                                        pb.setVisibility(View.GONE);
                                                     }
                                                 });
                                             }
@@ -110,6 +116,7 @@ public class GiveActivity extends ActionBarActivity {
                     }
                     else {
                         setProfile(receiverUsername);
+                        pb.setVisibility(View.GONE);
                     }
                     //////////////////
                     // set listview //
@@ -263,7 +270,7 @@ public class GiveActivity extends ActionBarActivity {
                     query.findInBackground(new FindCallback<ParseObject>() {
                         @Override
                         public void done(List<ParseObject> parseObjects, ParseException e) {
-                            if(e==null && parseObjects.size()==1) {
+                            if (e == null && parseObjects.size() == 1) {
                                 final ParseObject userInfo = parseObjects.get(0);
                                 userInfo.put("kindnessToBeDone", kindnessSuggestion);
                                 userInfo.put("hasDoneKindness", false);
