@@ -67,11 +67,18 @@ public class MainActivity extends ActionBarActivity {
         mGiveImage = (ImageView) findViewById(R.id.giveImage);
         mReceiveImage = (ImageView) findViewById(R.id.receiveImage);
         mPlantie = (ImageSwitcher)findViewById(R.id.Plant);
-        mGiveButton.setOnClickListener(new View.OnClickListener() {
+        mGiveButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    mGiveImage.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.helpsomeone_1));
+                }
                 Intent intent = new Intent(MainActivity.this, GiveActivity.class);
                 startActivity(intent);
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    mGiveImage.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.helpsomeone));
+                }
+                return false;
             }
         });
 
@@ -112,10 +119,11 @@ public class MainActivity extends ActionBarActivity {
             public void done(List<ParseObject> parseObjects, ParseException e) {
                 if (e == null && parseObjects.size() == 1) {
                     ParseObject userInfo = parseObjects.get(0);
-                    if (userInfo.getString("receiver")==null && userInfo.getBoolean("hasDoneKindness")) {
+                    if (userInfo.getString("receiver") == null && userInfo.getBoolean("hasDoneKindness")) {
                         userInfo.put("hasDoneKindness", false);
                         int currentPlantStage = userInfo.getInt("plantStage");
-                        if(currentPlantStage<(messageCount-1)) userInfo.put("plantStage", currentPlantStage+1);
+                        if (currentPlantStage < (messageCount - 1))
+                            userInfo.put("plantStage", currentPlantStage + 1);
                         mPlantie.setImageResource(imageIDs[currentPlantStage]);
                         userInfo.saveInBackground(new SaveCallback() {
                             @Override
@@ -176,35 +184,40 @@ public class MainActivity extends ActionBarActivity {
         super.onResume();
         pb.setVisibility(View.VISIBLE);
         ParseQuery<ParseObject> query = ParseQuery.getQuery("userInfo");
-        if(ParseUser.getCurrentUser()!=null) query.whereEqualTo("receiver", ParseUser.getCurrentUser().getUsername());
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> parseObjects, ParseException e) {
-                if (e == null && parseObjects.size() == 1) {
-                    ParseObject userInfo = parseObjects.get(0);
-                    if (userInfo.getString("kindnessToBeDone") != null && !userInfo.getBoolean("hasDoneKindness")) {
-                        mReceiveButton.setEnabled(true);
-                        mReceiveButton.setOnTouchListener(new View.OnTouchListener() {
-                            @Override
-                            public boolean onTouch(View v, MotionEvent event) {
-                                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                                    mReceiveImage.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.receivehelp_3));
+        if(ParseUser.getCurrentUser()!=null) {
+            query.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
+            query.findInBackground(new FindCallback<ParseObject>() {
+                @Override
+                public void done(List<ParseObject> parseObjects, ParseException e) {
+                    if (e == null && parseObjects.size() == 1) {
+                        ParseObject userInfo = parseObjects.get(0);
+                        if (userInfo.getString("kindnessToBeDone") != null && !userInfo.getBoolean("hasDoneKindness")) {
+                            //Kindness to be done, but has not been done
+                            mReceiveButton.setEnabled(true);
+                            mReceiveImage.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.receivehelp));
+                            mReceiveButton.setOnTouchListener(new View.OnTouchListener() {
+                                @Override
+                                public boolean onTouch(View v, MotionEvent event) {
+                                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                                        mReceiveImage.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.receivehelp_3));
+                                    }
+                                    Dialog();
+                                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                                        mReceiveImage.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.receivehelp));
+                                    }
+                                    pb.setVisibility(View.GONE);
+                                    return false;
                                 }
-                                if (event.getAction() == MotionEvent.ACTION_UP) {
-                                    mReceiveImage.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.receivehelp));
-                                }
-                                Dialog();
-                                pb.setVisibility(View.GONE);
-                                return false;
-                            }
-                        });
-                    } else {
-                        mReceiveButton.setEnabled(false);
-                        pb.setVisibility(View.GONE);
+                            });
+                        } else {
+                            mReceiveImage.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.receivehelp_2));
+                            mReceiveButton.setEnabled(false);
+                            pb.setVisibility(View.GONE);
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
     }
 
     public void Dialog() {
@@ -242,6 +255,7 @@ public class MainActivity extends ActionBarActivity {
                                     final ParseObject userInfo = parseObjects.get(0);
                                     userInfo.put("hasDoneKindness", true);
                                     userInfo.remove("receiver");
+                                    userInfo.remove("kindnessToBeDone");
                                     userInfo.saveInBackground(new SaveCallback() {
                                         @Override
                                         public void done(ParseException e) {
