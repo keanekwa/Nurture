@@ -258,18 +258,49 @@ public class MainActivity extends ActionBarActivity {
                             public void done(List<ParseObject> parseObjects, ParseException e) {
                                 if (e == null && parseObjects.size() == 1) {
                                     final ParseObject userInfo = parseObjects.get(0);
-                                    userInfo.put("hasDoneKindness", true);
-                                    userInfo.remove("receiver");
-                                    userInfo.remove("kindnessToBeDone");
-                                    userInfo.saveInBackground(new SaveCallback() {
-                                        @Override
-                                        public void done(ParseException e) {
-                                            alertMessage(userInfo.getString("username") + "'s kindness has been recorded!");
-                                            mReceiveImage.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.receivehelp_2));
-                                            mReceiveButton.setEnabled(false);
-                                            dialog.cancel();
-                                        }
-                                    });
+                                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+
+                                    String strToShow = userInfo.getString("kindnessToBeDone");
+                                    strToShow = strToShow.replace("him/her", "you");
+                                    strToShow = strToShow.replace("his/her", "your");
+                                    strToShow = strToShow.replace("!", "");
+                                    // set dialog message
+                                    alertDialogBuilder
+                                            .setTitle("Act Of Kindness")
+                                            .setMessage("Did "+userInfo.getString("username")+" "+strToShow+"?")
+                                            .setCancelable(false)
+                                            .setPositiveButton("Yup",new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface bloop,int id) {
+                                                    // if this button is clicked, close
+                                                    // current activity
+                                                    userInfo.put("hasDoneKindness", true);
+                                                    userInfo.remove("receiver");
+                                                    userInfo.remove("kindnessToBeDone");
+                                                    userInfo.saveInBackground(new SaveCallback() {
+                                                        @Override
+                                                        public void done(ParseException e) {
+                                                            alertMessage(userInfo.getString("username") + "'s kindness has been recorded!");
+                                                            mReceiveImage.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.receivehelp_2));
+                                                            mReceiveButton.setEnabled(false);
+                                                            dialog.cancel();
+                                                        }
+                                                    });
+                                                }
+                                            })
+                                            .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog,int id) {
+                                                    // if this button is clicked, just close
+                                                    // the dialog box and do nothing
+                                                    dialog.cancel();
+                                                }
+                                            });
+
+                                    // create alert dialog
+                                    AlertDialog alertDialog = alertDialogBuilder.create();
+
+                                    // show it
+                                    alertDialog.show();
+
                                 } else {
                                     alertMessage("Error, please check your spelling.");
                                 }
