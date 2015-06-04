@@ -201,39 +201,55 @@ public class MainActivity extends ActionBarActivity {
         builder.setTitle("Who showed you kindness today?");
         builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        //TODO: check this
+                        }
+                        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
+
+        alert.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                Button posbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+                Button negbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+                posbutton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
                         ParseQuery<ParseObject> query = ParseQuery.getQuery("userInfo");
                         query.whereEqualTo("username", usernameEditText.getText().toString());
                         query.findInBackground(new FindCallback<ParseObject>() {
                             @Override
                             public void done(List<ParseObject> parseObjects, ParseException e) {
-                                if(e==null && parseObjects.size()==1){
+                                if (e == null && parseObjects.size() == 1) {
                                     final ParseObject userInfo = parseObjects.get(0);
                                     userInfo.put("hasDoneKindness", true);
                                     userInfo.remove("receiver");
                                     userInfo.saveInBackground(new SaveCallback() {
                                         @Override
                                         public void done(ParseException e) {
-                                            alertMessage(userInfo.getString("username")+"'s kindness has been recorded!");
+                                            alertMessage(userInfo.getString("username") + "'s kindness has been recorded!");
                                             mReceiveButton.setEnabled(false);
                                         }
                                     });
-                                }
-
-                                else {
+                                } else {
                                     alertMessage("This user does not exist! Check the spelling.");
                                 }
                             }
                         });
                     }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
+                });
+                negbutton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alert.cancel();
                     }
                 });
-        builder.create().show();
+            }
+        });
     }
-
 
     public void alertMessage(String Message)
     {
