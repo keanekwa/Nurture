@@ -1,9 +1,8 @@
 package com.example.user.nurture;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -54,12 +52,10 @@ public class GiveActivity extends ActionBarActivity {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
                 if(e==null && parseObjects.size()==1){
-<<<<<<< HEAD
                     ParseObject userInfo = parseObjects.get(0);
                     mNameTextView.setText(userInfo.getString("username"));
                     mSchoolTextView.setText(userInfo.getString("class"));
                     //mProfilePic.setImageDrawable(userInfo.getFile("profilepic"));
-=======
                     String receiverUsername = parseObjects.get(0).getString("receiver");
                     ParseQuery<ParseUser> query = ParseUser.getQuery();
                     query.whereEqualTo("username", receiverUsername);
@@ -74,7 +70,6 @@ public class GiveActivity extends ActionBarActivity {
                             }
                         }
                     });
->>>>>>> origin/master
                 }
             }
         });
