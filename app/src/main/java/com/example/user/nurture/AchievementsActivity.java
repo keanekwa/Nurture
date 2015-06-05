@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.GetDataCallback;
+import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -94,6 +95,16 @@ public class AchievementsActivity extends ActionBarActivity {
         if (id == android.R.id.home) {
             Intent intent = new Intent(AchievementsActivity.this, MainActivity.class);
             AchievementsActivity.this.startActivity(intent);
+        }
+
+        else if (id == R.id.action_logout){
+            ParseUser.getCurrentUser().logOutInBackground(new LogOutCallback() {
+                @Override
+                public void done(ParseException e) {
+                    Intent intent = new Intent(AchievementsActivity.this, LoginActivity.class);
+                    AchievementsActivity.this.startActivity(intent);
+                }
+            });
         }
 
         return super.onOptionsItemSelected(item);
