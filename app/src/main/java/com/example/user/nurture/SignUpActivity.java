@@ -25,6 +25,7 @@ import com.parse.SignUpCallback;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 
@@ -106,6 +107,7 @@ public class SignUpActivity extends Activity {
                                 newUserInfo.put("hasDoneKindness", false);
                                 newUserInfo.put("plantStage", 0);
                                 newUserInfo.put("kindnessCount", 0);
+                                newUserInfo.put("dateLastKind", new Date());
                                 newUserInfo.put("school", schoolInput);
                                 newUserInfo.put("role", roleInput);
                                 ByteArrayOutputStream stream = new ByteArrayOutputStream();

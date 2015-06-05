@@ -32,6 +32,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -126,6 +127,32 @@ public class MainActivity extends ActionBarActivity {
             public void done(List<ParseObject> parseObjects, ParseException e) {
                 if (e == null && parseObjects.size() == 1) {
                     ParseObject userInfo = parseObjects.get(0);
+                    Date today = new Date();
+                    long diff = today.getTime() - userInfo.getDate("dateLastKind").getTime();
+                    int days = (int)diff / (1000 * 60 * 60 * 24);
+                    int daysLeft = 7 - days;
+                    String daysText;
+                    String daysLeftText;
+                    switch (days){
+                        case 0: daysText="today";
+                            break;
+                        case 1: daysText="yesterday";
+                            break;
+                        default: daysText=String.valueOf(days)+" days ago";
+                            break;
+                    }
+                    switch (daysLeft){
+                        case 0: daysLeftText="today";
+                            break;
+                        case 1: daysLeftText="tomorrow";
+                            break;
+                        default: daysLeftText= "within "+String.valueOf(daysLeft)+" days";
+                            break;
+                    }
+                    if(daysLeft<0) daysLeftText= String.valueOf(Math.abs(daysLeft))+" days ago";
+                    if(userInfo.getString("lastHelped")!=null) mCongratsText.setText("You have helped "+userInfo.getString("lastHelped")+" "+daysText+"!\nHelp someone else " +daysLeftText+ " to keep nurturing your plant!");
+                    else mCongratsText.setText("Help someone else "+daysLeftText+" to keep nurturing your plant!");
+
                     if (userInfo.getString("receiver") == null && userInfo.getBoolean("hasDoneKindness")) {
                         userInfo.put("hasDoneKindness", false);
                         int currentPlantStage = userInfo.getInt("plantStage");
@@ -279,6 +306,8 @@ public class MainActivity extends ActionBarActivity {
                                                     userInfo.put("hasDoneKindness", true);
                                                     userInfo.remove("receiver");
                                                     userInfo.remove("kindnessToBeDone");
+                                                    userInfo.put("lastHelped", usernameEditText.getText().toString());
+                                                    userInfo.put("dateLastKind", new Date());
                                                     userInfo.put("kindnessCount", (1 + userInfo.getInt("kindnessCount")));
                                                     userInfo.saveInBackground(new SaveCallback() {
                                                         @Override
