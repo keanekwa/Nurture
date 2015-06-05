@@ -13,19 +13,16 @@
         android:layout_height="wrap_content"
         android:id="@+id/imageView2"
         android:src="@drawable/nurturelogowhite"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="30dp"
-        android:paddingBottom="60dp" />
+        android:paddingBottom="60dp"
+        android:layout_alignBottom="@+id/progressBar"
+        android:layout_alignParentRight="true" />
 
     <ProgressBar
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:indeterminate="true"
-        android:layout_marginBottom="98dp"
-        android:layout_alignBottom="@+id/imageView2"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/progressBar" />
 
 </RelativeLayout>
