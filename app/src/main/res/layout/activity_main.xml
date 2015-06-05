@@ -33,7 +33,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Congrats Text"
             android:id="@+id/congratsTextView"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
