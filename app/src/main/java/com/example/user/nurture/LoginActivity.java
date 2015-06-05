@@ -1,10 +1,8 @@
 package com.example.user.nurture;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,8 +19,8 @@ import com.parse.ParseUser;
 public class LoginActivity extends Activity {
 
     TextView mSignUpTextView;
-    EditText user;
-    EditText pass;
+    EditText userBlank;
+    EditText passBlank;
     String mUsername;
     String mPassword;
     Button mLogin;
@@ -41,15 +39,15 @@ public class LoginActivity extends Activity {
             }
         });
 
-        user = (EditText) findViewById(R.id.userEditText);
-        pass = (EditText) findViewById(R.id.passEditText);
+        userBlank = (EditText) findViewById(R.id.userEditText);
+        passBlank = (EditText) findViewById(R.id.passEditText);
 
         mLogin = (Button) findViewById(R.id.loginButton);
         mLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mUsername = user.getText().toString();
-                mPassword = pass.getText().toString();
+                mUsername = userBlank.getText().toString();
+                mPassword = passBlank.getText().toString();
                 if (mUsername.equals("") | mPassword.equals("")){
                     alertMessage("Please fill in the empty fields.");
                     //checks for empty fields
@@ -57,6 +55,8 @@ public class LoginActivity extends Activity {
                 else ParseUser.logInInBackground(mUsername, mPassword, new LogInCallback() {
                     public void done(ParseUser user, ParseException e) {
                         if (user != null && e == null) {
+                            userBlank.setText("");
+                            passBlank.setText("");
                             Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                             startActivity(intent);
                         } else {

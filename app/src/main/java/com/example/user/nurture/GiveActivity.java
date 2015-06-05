@@ -43,7 +43,7 @@ public class GiveActivity extends ActionBarActivity {
         setContentView(R.layout.activity_give);
 
         ////////////////////////
-        // set user "profile" //
+        // set userBlank "profile" //
         ////////////////////////
         mProfilePic = (ImageView)findViewById(R.id.profilePic);
         mNameTextView = (TextView)findViewById(R.id.nameTextView);

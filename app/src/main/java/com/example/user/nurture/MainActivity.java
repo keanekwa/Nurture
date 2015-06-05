@@ -121,7 +121,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void checkLogin(){
-        //checks if user is logged in
+        //checks if userBlank is logged in
         if (ParseUser.getCurrentUser()==null)
         {
             Intent intent = new Intent (this, LoginActivity.class);

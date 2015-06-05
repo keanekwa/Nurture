@@ -1,5 +1,6 @@
 package com.example.user.nurture;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -36,7 +37,7 @@ public class ReceiveActivity extends ActionBarActivity {
         setContentView(R.layout.activity_receive);
 
         ////////////////////////
-        // set user "profile" //
+        // set userBlank "profile" //
         ////////////////////////
         mProfilePic = (ImageView)findViewById(R.id.profilePic);
         mNameTextView = (TextView)findViewById(R.id.nameTextView);
@@ -80,6 +81,8 @@ public class ReceiveActivity extends ActionBarActivity {
                                         public void onClick(View v) {
                                             giverUserInfo.put("hasDoneKindness", true);
                                             giverUserInfo.saveInBackground();
+                                            Intent intent = new Intent(ReceiveActivity.this, MainActivity.class);
+                                            ReceiveActivity.this.startActivity(intent);
                                         }
                                     });
                                 }
