@@ -34,6 +34,7 @@ public class AchievementsActivity extends ActionBarActivity {
 
     ProgressBar progressBar = new ProgressBar(AchievementsActivity.this);
     ListView lvToShow = (ListView)findViewById(R.id.achievesListView);
+    ArrayList <ParseObject> mAchieves = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +43,12 @@ public class AchievementsActivity extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setTitle("Your Achievements");
-        final ArrayList <ParseObject> mAchieves = new ArrayList<>();
 
         final List list = ParseUser.getCurrentUser().getList("achievements");
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).toString().equals("[]")) {
                 mAchieves.remove(i);
             } else {
-
                 ParseQuery<ParseObject> check = ParseQuery.getQuery("Achievements");
                 final int finalI = i;
                 check.findInBackground(new FindCallback<ParseObject>() {
