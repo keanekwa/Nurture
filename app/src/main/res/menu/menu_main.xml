@@ -4,10 +4,10 @@
       tools:context=".MainActivity">
     <item android:id="@+id/action_logout"
           android:title="Logout"
-          android:showAsAction="ifRoom"
+          app:showAsAction="ifRoom"
         android:icon="@drawable/logouticon"/>
       <item android:id="@+id/action_profile"
           android:title="Profile"
           android:icon="@drawable/profileicon"
-          android:showAsAction="ifRoom"/>
+          app:showAsAction="ifRoom"/>
 </menu>
