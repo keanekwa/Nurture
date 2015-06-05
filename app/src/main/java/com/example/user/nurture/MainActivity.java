@@ -276,10 +276,42 @@ public class MainActivity extends ActionBarActivity {
                                                     userInfo.put("hasDoneKindness", true);
                                                     userInfo.remove("receiver");
                                                     userInfo.remove("kindnessToBeDone");
+                                                    userInfo.put("kindnessCount", (1 + userInfo.getInt("kindnessCount")));
                                                     userInfo.saveInBackground(new SaveCallback() {
                                                         @Override
                                                         public void done(ParseException e) {
-                                                            alertMessage(userInfo.getString("username") + "'s kindness has been recorded!");
+                                                            ParseQuery<ParseObject> query = ParseQuery.getQuery("Achievements");
+                                                            boolean toAddAchievement;
+                                                            switch (userInfo.getInt("kindnessCount")){
+                                                                case 1: query.whereEqualTo("achID", 1);
+                                                                    toAddAchievement = true;
+                                                                case 5: query.whereEqualTo("achID", 5);
+                                                                    toAddAchievement = true;
+                                                                case 10: query.whereEqualTo("achID", 10);
+                                                                    toAddAchievement = true;
+                                                                case 20: query.whereEqualTo("achID", 20);
+                                                                    toAddAchievement = true;
+                                                                default:
+                                                                    toAddAchievement = false;
+                                                            }
+                                                            if(toAddAchievement){
+                                                                query.findInBackground(new FindCallback<ParseObject>() {
+                                                                    @Override
+                                                                    public void done(List<ParseObject> parseObjects, ParseException e) {
+                                                                        if(e==null && parseObjects.size()==1){
+                                                                            ParseObject achievement = parseObjects.get(0);
+                                                                            achievement.addUnique("usernames", userInfo.getString("username"));
+                                                                            achievement.saveInBackground(new SaveCallback() {
+                                                                                @Override
+                                                                                public void done(ParseException e) {
+                                                                                    alertMessage(userInfo.getString("username") + "'s kindness has been recorded!");
+                                                                                }
+                                                                            });
+                                                                        }
+                                                                    }
+                                                                });
+                                                            }
+                                                            else alertMessage(userInfo.getString("username") + "'s kindness has been recorded!");
                                                             mReceiveImage.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.receivehelp_2));
                                                             mReceiveButton.setEnabled(false);
                                                             dialog.cancel();

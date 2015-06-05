@@ -100,6 +100,7 @@ public class SignUpActivity extends Activity {
                                 newUserInfo.put("username", usernameInput);
                                 newUserInfo.put("hasDoneKindness", false);
                                 newUserInfo.put("plantStage", 0);
+                                newUserInfo.put("kindnessCount", 0);
                                 newUserInfo.put("school", schoolInput);
                                 newUserInfo.put("role", roleInput);
                                 newUserInfo.saveInBackground(new SaveCallback() {
