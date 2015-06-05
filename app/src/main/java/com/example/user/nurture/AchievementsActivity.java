@@ -79,10 +79,10 @@ public class AchievementsActivity extends ActionBarActivity {
                 row = getLayoutInflater().inflate(mResource, parent, false);
             }
             //get the homework to be displayed in row
-            final String currentFriend = mAchieves.get(position);
+            final String currentAchieve = mAchieves.get(position);
             //display data from homework into row
             TextView titleTextView = (TextView) row.findViewById(R.id.achievesTitle);
-            titleTextView.setText(currentFriend);
+            titleTextView.setText(currentAchieve);
             final TextView subtitleTextView = (TextView) row.findViewById(R.id.achievesSubtitle);
             ParseQuery<ParseUser> check = ParseUser.getQuery();
             Button achievesIcon = (Button) row.findViewById(R.id.achievesPic);
