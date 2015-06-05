@@ -1,5 +1,6 @@
 package com.example.user.nurture;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class SignUpActivity extends ActionBarActivity {
+public class SignUpActivity extends Activity {
 
     EditText mUsernameBlank;
     EditText mPasswordBlank;
@@ -125,10 +126,10 @@ public class SignUpActivity extends ActionBarActivity {
                     }
                 });
         builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
+            public void onClick(DialogInterface dialog, int whichButton) {
 
-                    }
-                });
+            }
+        });
         AlertDialog dialog = builder.create();
         dialog.show();
     }
