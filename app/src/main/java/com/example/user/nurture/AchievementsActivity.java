@@ -44,37 +44,31 @@ public class AchievementsActivity extends ActionBarActivity {
         assert actionBar != null;
         actionBar.setTitle("Your Achievements");
 
-        final List list = ParseUser.getCurrentUser().getList("achievements");
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).toString().equals("[]")) {
-                mAchieves.remove(i);
-            } else {
                 ParseQuery<ParseObject> check = ParseQuery.getQuery("Achievements");
-                final int finalI = i;
                 check.findInBackground(new FindCallback<ParseObject>() {
-                                           @Override
-                                           public void done(List<ParseObject> list2, ParseException e) {
-                                               if (e == null) {
-                                                   for (int j = 0; j < list2.size(); j++) {
-                                                       if (list.get(finalI) == list2.get(j).getInt("achID")) {
-                                                           mAchieves.add(list2.get(j));
-                                                       }
-                                                   }
-                                               }
-
-                                               else{
-                                                   // Set a textView with "You do not have any achievements yet."
-                                               }
-
-
-                                           }
-                                       }
-
-                );
+                    @Override
+                    public void done(List<ParseObject> list2, ParseException e) {
+                        if (e == null) {
+                            for (int j = 0; j < list2.size(); j++) {
+                                List usernames = list2.get(j).getList("usernames");
+                                for (int k = 0; k < usernames.size(); k++) {
+                                    if (usernames.get(k).toString().equals(ParseUser.getCurrentUser().getUsername())) {
+                                        mAchieves.add(list2.get(j));
+                                        break;
+                                    }
+                                }
+                            }
 
 
-            }
-        }
+                        }
+
+                    }
+
+                });
+
+
+
+        
 
         ArrayAdapter<ParseObject> adapter;
         adapter = new AchievesAdapter(this, R.layout.list_achieves, mAchieves);
