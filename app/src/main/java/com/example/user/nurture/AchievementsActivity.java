@@ -50,6 +50,7 @@ public class AchievementsActivity extends ActionBarActivity {
         mSchoolTextView = (TextView)findViewById(R.id.schoolTextView);
         mRoleTextView = (TextView)findViewById(R.id.roleTextView);
         mProfilePic = (ImageView) findViewById(R.id.profilePic);
+        noAchieves = (TextView) findViewById(R.id.noAchieves);
 
         assert actionBar != null;
         actionBar.setTitle("Your Badges");
@@ -99,7 +100,7 @@ public class AchievementsActivity extends ActionBarActivity {
                         }
                     }
                     ListView lvToShow = (ListView)findViewById(R.id.achievesListView);
-                    if (mAchieves.size() == 0){
+                    if (mAchieves.size() == 0 | mAchieves==null){
                         lvToShow.setVisibility(View.GONE);
                         noAchieves.setVisibility(View.VISIBLE);
                     }
