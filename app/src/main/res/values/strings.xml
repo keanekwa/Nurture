@@ -10,4 +10,11 @@
     <string name="login">Login</string>
     <string name="intro">Plant the seed of kindness in your community.</string>
     <string name="signup">New to Nurture? Sign up here.</string>
+    <string name="join">Join Nurture</string>
+    <string name="user">Username</string>
+    <string name="create">Create</string>
+    <string name="pass">Password</string>
+    <string name="cPass">Confirm Password</string>
+    <string name="email">Email</string>
+    <string name="subtitle">Do a kind act for someone today</string>
 </resources>
