@@ -1,17 +1,65 @@
 package com.example.user.nurture;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.parse.ParseException;
+import com.parse.ParseUser;
 
 
 public class LoginActivity extends ActionBarActivity {
+
+    TextView mSignUpTextView;
+    EditText user;
+    EditText pass;
+    String mUsername;
+    String mPassword;
+    Button mLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        getActionBar().hide();
+
+        mSignUpTextView = (TextView) findViewById(R.id.signUpTextView);
+        mSignUpTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                LoginActivity.this.startActivity(intent);
+            }
+        });
+
+        user = (EditText) findViewById(R.id.userEditText);
+        pass = (EditText) findViewById(R.id.passEditText);
+        mUsername = user.getText().toString();
+        mPassword = pass.getText().toString();
+
+        mLogin = (Button) findViewById(R.id.loginButton);
+        mLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mUsername.equals("") | mPassword.equals("")){
+                    alertMessage("Please fill in the empty fields.");
+                    //checks for empty fields
+                }
+                else {
+                    try {
+                        ParseUser.logIn(mUsername, mPassword);
+                    } catch (ParseException e) {
+                        alertMessage("Login failed. Please try again.");
+                    }
+            }
+        }});
     }
 
     @Override
@@ -34,5 +82,10 @@ public class LoginActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void alertMessage(String Message)
+    {
+        Toast.makeText(LoginActivity.this, Message, Toast.LENGTH_SHORT).show();
     }
 }

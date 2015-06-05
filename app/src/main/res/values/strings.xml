@@ -7,4 +7,7 @@
     <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="title_activity_give">GiveActivity</string>
     <string name="title_activity_receive">ReceiveActivity</string>
+    <string name="login">Login</string>
+    <string name="intro">Plant the seed of kindness in your community.</string>
+    <string name="signup">New to Nurture? Sign up here.</string>
 </resources>
