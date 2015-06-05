@@ -86,6 +86,7 @@ public class AchievementsActivity extends ActionBarActivity {
 
 
         ParseQuery<ParseObject> check = ParseQuery.getQuery("Achievements");
+        check.orderByAscending("achID");
         check.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list2, ParseException e) {

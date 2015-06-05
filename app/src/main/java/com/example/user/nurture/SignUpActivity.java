@@ -117,7 +117,7 @@ public class SignUpActivity extends Activity {
                                 newUserInfo.put("role", roleInput);
                                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                                 byte[] data = stream.toByteArray();
-                                final ParseFile profImg = new ParseFile(String.valueOf(R.drawable.default_profile), data);
+                                final ParseFile profImg = new ParseFile(String.valueOf(R.drawable.default_profile)+".jpg", data);
                                 profImg.saveInBackground(new SaveCallback() {
                                     @Override
                                     public void done(ParseException e) {
