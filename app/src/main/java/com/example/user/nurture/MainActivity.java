@@ -3,6 +3,7 @@ package com.example.user.nurture;
 import android.app.ActionBar;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
@@ -75,6 +76,8 @@ public class MainActivity extends ActionBarActivity {
         mReceiveImage = (ImageView) findViewById(R.id.receiveImage);
         mPlantie = (ImageSwitcher)findViewById(R.id.Plant);
         mCongratsText = (TextView) findViewById(R.id.congratsTextView);
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/markerfelt.ttf");
+        mCongratsText.setTypeface(tf);
         mGiveButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -161,7 +164,7 @@ public class MainActivity extends ActionBarActivity {
                             public void done(ParseException e) {
                                 pb.setVisibility(View.GONE);
                             }
-                    });
+                        });
                     }
                     else if (userInfo.getString("receiver") == null && userInfo.getBoolean("hasDoneKindness")) {
                         userInfo.put("hasDoneKindness", false);
