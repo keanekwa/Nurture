@@ -34,7 +34,7 @@ import java.util.List;
 
 public class AchievementsActivity extends ActionBarActivity {
 
-
+    TextView noAchieves;
     ArrayList <ParseObject> mAchieves = new ArrayList<>();
 
     @Override
@@ -42,9 +42,12 @@ public class AchievementsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_achievements);
         ActionBar actionBar = getSupportActionBar();
+
         assert actionBar != null;
         actionBar.setTitle("Your Achievements");
         actionBar.setDisplayHomeAsUpEnabled(true);
+        noAchieves = (TextView) findViewById(R.id.noAchieves);
+
 
                 ParseQuery<ParseObject> check = ParseQuery.getQuery("Achievements");
                 check.findInBackground(new FindCallback<ParseObject>() {
@@ -72,9 +75,19 @@ public class AchievementsActivity extends ActionBarActivity {
 
 
         ListView lvToShow = (ListView)findViewById(R.id.achievesListView);
-        ArrayAdapter<ParseObject> adapter;
-        adapter = new AchievesAdapter(this, R.layout.list_achieves, mAchieves);
-        lvToShow.setAdapter(adapter);
+
+        if (mAchieves.size() == 0){
+            lvToShow.setVisibility(View.GONE);
+            noAchieves.setVisibility(View.VISIBLE);
+        }
+
+        else {
+            lvToShow.setVisibility(View.VISIBLE);
+            noAchieves.setVisibility(View.GONE);
+            ArrayAdapter<ParseObject> adapter;
+            adapter = new AchievesAdapter(this, R.layout.list_achieves, mAchieves);
+            lvToShow.setAdapter(adapter);
+        }
     }
 
     @Override
