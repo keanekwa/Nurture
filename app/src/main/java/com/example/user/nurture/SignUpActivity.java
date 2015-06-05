@@ -43,6 +43,13 @@ public class SignUpActivity extends ActionBarActivity {
         mEmailAddBlank = (EditText) findViewById(R.id.EmailBlank);
         mSchoolBlank = (EditText) findViewById(R.id.SchoolBlank);
 
+        mSchoolBlank.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog();
+            }
+        });
+
         mAddAccount = (Button) findViewById(R.id.CreateButton);
         mAddAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +59,7 @@ public class SignUpActivity extends ActionBarActivity {
                 cPasswordInput = mCPasswordBlank.getText().toString();
                 emailInput = mEmailAddBlank.getText().toString();
 
-                if (usernameInput.equals("") | passwordInput.equals("") | cPasswordInput.equals("") | emailInput.equals("")){
+                if (usernameInput.equals("") | passwordInput.equals("") | cPasswordInput.equals("") | emailInput.equals("")|schoolInput.equals("")){
                     alertMessage("Please fill in the empty fields.");
                     //checks for empty fields
                 }
@@ -115,7 +122,7 @@ public class SignUpActivity extends ActionBarActivity {
                         ArrayList<String> l =new ArrayList<>();
                         l.equals(array);
                         schoolInput = l.get(which);
-
+                        mSchoolBlank.setText(schoolInput);
                     }
                 })
                 .setNegativeButton("Back", new DialogInterface.OnClickListener() {
