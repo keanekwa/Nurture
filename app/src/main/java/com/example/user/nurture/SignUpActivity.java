@@ -113,8 +113,8 @@ public class SignUpActivity extends ActionBarActivity {
     }
 
     public void Dialog() {
-        new AlertDialog.Builder(this)
-                .setTitle("Choose your school")
+         AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
+        builder .setTitle("Choose your school")
                 .setItems(R.array.mSchoolList, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -127,7 +127,8 @@ public class SignUpActivity extends ActionBarActivity {
                     public void onClick(DialogInterface dialog, int whichButton) {
 
                     }
-                })
-                .show();
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
