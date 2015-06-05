@@ -17,7 +17,7 @@ import android.widget.ViewSwitcher;
 
 public class TutorialActivity extends ActionBarActivity {
 
-    int NEWimageIDs[]={R.drawable.tutorial_home,R.drawable.tutorial_achievement,R.drawable.tutorial_give,R.drawable.tutorial_receive};
+    int NEWimageIDs[]={R.drawable.helpsomeone,R.drawable.profile};
     int messageCount=NEWimageIDs.length;
     int currentIndex=-1;
     Button mButton;
