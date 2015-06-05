@@ -118,7 +118,7 @@ public class AchievementsActivity extends ActionBarActivity {
             final ParseObject currentAchieve = mAchieveTitles.get(position);
             TextView titleTextView = (TextView) row.findViewById(R.id.achievesTitle);
             titleTextView.setText(currentAchieve.get("name").toString());
-            final TextView subtitleTextView = (TextView) row.findViewById(R.id.achievesSubtitle);
+            TextView subtitleTextView = (TextView) row.findViewById(R.id.achievesSubtitle);
             subtitleTextView.setText(currentAchieve.get("subtitle").toString());
             ParseFile fileObject = currentAchieve.getParseFile("badgePic");
             final ImageView achievesIcon = (ImageView) row.findViewById(R.id.achievesPic);
