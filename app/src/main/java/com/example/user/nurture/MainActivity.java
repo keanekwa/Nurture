@@ -53,7 +53,7 @@ public class MainActivity extends ActionBarActivity {
         //mPlantie.setImageResource(imageIDs[currentIndex]);
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
-        actionBar.setTitle("Home");
+        actionBar.setTitle("Welcome, " + ParseUser.getCurrentUser().getUsername());
         actionBar.setIcon(R.drawable.nurturelogoicon);
 
         mGiveButton = (Button) findViewById(R.id.GiveButton);
