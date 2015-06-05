@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.parse.LogInCallback;
@@ -44,6 +45,7 @@ public class SignUpActivity extends Activity {
     String emailInput;
     Button mAddAccount;
     Button mRoleBlank;
+    ProgressBar loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,8 @@ public class SignUpActivity extends Activity {
         mEmailAddBlank = (EditText) findViewById(R.id.EmailBlank);
         mSchoolBlank = (Button) findViewById(R.id.SchoolBlank);
         mRoleBlank = (Button) findViewById(R.id.roleButton);
+        loading = (ProgressBar)findViewById(R.id.loading);
+        loading.setVisibility(View.GONE);
 
         mSchoolBlank.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +98,7 @@ public class SignUpActivity extends Activity {
 
                 }
                 else {
+                    loading.setVisibility(View.VISIBLE);
                     ParseUser userObject = new ParseUser();
                     userObject.setUsername(usernameInput);
                     userObject.setPassword(passwordInput);
@@ -124,6 +129,7 @@ public class SignUpActivity extends Activity {
                                                     public void done(ParseUser user, ParseException e) {
                                                         if (user != null && e == null) {
                                                             Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                                                            loading.setVisibility(View.GONE);
                                                             SignUpActivity.this.startActivity(intent);
                                                         } else {
                                                             alertMessage(e.toString());
