@@ -15,6 +15,8 @@ import android.widget.Toast;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class SignUpActivity extends ActionBarActivity {
@@ -116,10 +118,8 @@ public class SignUpActivity extends ActionBarActivity {
                 .setItems(R.array.mSchoolList, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String[] array = getResources().getStringArray(R.array.mSchoolList);
-                        ArrayList<String> l =new ArrayList<>();
-                        l.equals(array);
-                        schoolInput = l.get(which);
+                        List<String> array = Arrays.asList(getResources().getStringArray(R.array.mSchoolList));
+                        schoolInput = array.get(which);
                         mSchoolBlank.setText(schoolInput);
                     }
                 })
