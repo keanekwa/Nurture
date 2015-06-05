@@ -40,12 +40,11 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-<<<<<<< HEAD
-        checkLogin();
+
         //mPlantie.setImageResource(imageIDs[0]);
-=======
+
         //mPlantie.setImageResource(imageIDs[currentIndex]);
->>>>>>> origin/master
+
 
         mGiveButton = (Button) findViewById(R.id.GiveButton);
         mReceiveButton = (Button) findViewById(R.id.ReceiveButton);
