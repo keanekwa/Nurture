@@ -52,7 +52,8 @@ public class GiveActivity extends ActionBarActivity {
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
-        actionBar.setTitle("Help");
+        actionBar.setTitle("This is who you are giving to.");
+        actionBar.setDisplayHomeAsUpEnabled(true);
         /////////////////////////////
         // set userBlank "profile" //
         /////////////////////////////
@@ -209,6 +210,11 @@ public class GiveActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+
+        else if (id == android.R.id.home) {
+            Intent intent = new Intent(GiveActivity.this, MainActivity.class);
+            GiveActivity.this.startActivity(intent);
+        }
         else if (id == R.id.action_logout) {
             ParseUser.getCurrentUser().logOutInBackground(new LogOutCallback() {
                 @Override
@@ -216,8 +222,8 @@ public class GiveActivity extends ActionBarActivity {
                     Intent intent = new Intent(GiveActivity.this, LoginActivity.class);
                     GiveActivity.this.startActivity(intent);
                 }
-            });}
-
+            });
+        }
 
 
         return super.onOptionsItemSelected(item);

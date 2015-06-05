@@ -1,6 +1,7 @@
 package com.example.user.nurture;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.ActionBar;
@@ -42,6 +43,7 @@ public class AchievementsActivity extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setTitle("Your Achievements");
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
                 ParseQuery<ParseObject> check = ParseQuery.getQuery("Achievements");
                 check.findInBackground(new FindCallback<ParseObject>() {
@@ -89,8 +91,9 @@ public class AchievementsActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == android.R.id.home) {
+            Intent intent = new Intent(AchievementsActivity.this, MainActivity.class);
+            AchievementsActivity.this.startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
