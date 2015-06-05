@@ -2,10 +2,11 @@ package com.example.user.nurture;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.parse.ParseUser;
 
 
 public class SplashScreenActivity extends Activity {
@@ -22,6 +23,7 @@ public class SplashScreenActivity extends Activity {
                 }catch(InterruptedException e){
                     e.printStackTrace();
                 }finally{
+                    checkLogin();
                     Intent i = new Intent(SplashScreenActivity.this,MainActivity.class);
                     startActivity(i);
                 }
@@ -51,5 +53,16 @@ public class SplashScreenActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void checkLogin(){
+        if (ParseUser.getCurrentUser()==null)
+        {
+            Intent intent = new Intent (this, LoginActivity.class);
+            this.startActivity(intent);
+
+        }
+
+
     }
 }

@@ -33,7 +33,6 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        checkLogin();
         //mPlantie.setImageResource(imageIDs[currentIndex]);
 
         mGiveButton = (Button) findViewById(R.id.GiveButton);
@@ -121,15 +120,5 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void checkLogin(){
-        //checks if userBlank is logged in
-        if (ParseUser.getCurrentUser()==null)
-        {
-            Intent intent = new Intent (this, LoginActivity.class);
-            this.startActivity(intent);
 
-        }
-
-
-    }
 }
