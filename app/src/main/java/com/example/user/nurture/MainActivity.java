@@ -40,9 +40,9 @@ public class MainActivity extends ActionBarActivity {
     private LinearLayout mGiveButton;
     private LinearLayout mReceiveButton;
     private ImageSwitcher mPlantie;
-    private TextView mMeter;
     private ImageView mGiveImage;
     private ImageView mReceiveImage;
+    private TextView mCongratsText;
     int imageIDs[]={R.drawable.plant_seed,R.drawable.plant_shoot,R.drawable.plant_seedling,R.drawable.plant_small,R.drawable.plant_withered};
     int messageCount=imageIDs.length;
     int currentIndex=0;
@@ -73,6 +73,7 @@ public class MainActivity extends ActionBarActivity {
         mGiveImage = (ImageView) findViewById(R.id.giveImage);
         mReceiveImage = (ImageView) findViewById(R.id.receiveImage);
         mPlantie = (ImageSwitcher)findViewById(R.id.Plant);
+        mCongratsText = (TextView) findViewById(R.id.congratsTextView);
         mGiveButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -128,8 +129,9 @@ public class MainActivity extends ActionBarActivity {
                     if (userInfo.getString("receiver") == null && userInfo.getBoolean("hasDoneKindness")) {
                         userInfo.put("hasDoneKindness", false);
                         int currentPlantStage = userInfo.getInt("plantStage");
-                        if (currentPlantStage < (messageCount - 1))
+                        if (currentPlantStage < (messageCount - 1)) {
                             userInfo.put("plantStage", currentPlantStage + 1);
+                        }
                         mPlantie.setImageResource(imageIDs[currentPlantStage]);
                         userInfo.saveInBackground(new SaveCallback() {
                             @Override
@@ -137,6 +139,7 @@ public class MainActivity extends ActionBarActivity {
                                 pb.setVisibility(View.GONE);
                             }
                         });
+
                     }
                     else {
                         mPlantie.setImageResource(imageIDs[userInfo.getInt("plantStage")]);
@@ -153,7 +156,7 @@ public class MainActivity extends ActionBarActivity {
             public void done(List<ParseObject> parseObjects, ParseException e) {
                 if (e == null) {
                     boolean buttonActivated = false;
-                    if(parseObjects.size() > 0) {
+                    if (parseObjects.size() > 0) {
                         for (ParseObject i : parseObjects) {
                             if (i.getString("kindnessToBeDone") != null && !i.getBoolean("hasDoneKindness"))
                                 buttonActivated = true;
@@ -267,10 +270,10 @@ public class MainActivity extends ActionBarActivity {
                                     // set dialog message
                                     alertDialogBuilder
                                             .setTitle("Act Of Kindness")
-                                            .setMessage("Did "+userInfo.getString("username")+" "+strToShow+"?")
+                                            .setMessage("Did " + userInfo.getString("username") + " " + strToShow + "?")
                                             .setCancelable(false)
-                                            .setPositiveButton("Yup",new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface bloop,int id) {
+                                            .setPositiveButton("Yup", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface bloop, int id) {
                                                     // if this button is clicked, close
                                                     // current activity
                                                     userInfo.put("hasDoneKindness", true);
@@ -325,8 +328,8 @@ public class MainActivity extends ActionBarActivity {
                                                     });
                                                 }
                                             })
-                                            .setNegativeButton("No",new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog,int id) {
+                                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
                                                     // if this button is clicked, just close
                                                     // the dialog box and do nothing
                                                     dialog.cancel();
