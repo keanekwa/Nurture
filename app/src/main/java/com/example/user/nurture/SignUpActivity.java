@@ -30,7 +30,7 @@ public class SignUpActivity extends Activity {
     EditText mPasswordBlank;
     EditText mCPasswordBlank;
     EditText mEmailAddBlank;
-    EditText mSchoolBlank;
+    Button mSchoolBlank;
     String usernameInput;
     String passwordInput;
     String schoolInput;
@@ -46,7 +46,7 @@ public class SignUpActivity extends Activity {
         mPasswordBlank = (EditText) findViewById(R.id.PasswordBlank);
         mCPasswordBlank = (EditText) findViewById(R.id.PasswordBlank2);
         mEmailAddBlank = (EditText) findViewById(R.id.EmailBlank);
-        mSchoolBlank = (EditText) findViewById(R.id.SchoolBlank);
+        mSchoolBlank = (Button) findViewById(R.id.SchoolBlank);
 
         mSchoolBlank.setOnClickListener(new View.OnClickListener() {
             @Override
