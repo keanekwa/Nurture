@@ -25,5 +25,6 @@
     <string name="role">Role</string>
     <string name="suggestive_heading">Suggested Acts of Kindness:</string>
     <string name="title_activity_achievements">AchievementsActivity</string>
+    <string name="title_activity_tutorial">TutorialActivity</string>
 
 </resources>
