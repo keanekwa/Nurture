@@ -5,8 +5,8 @@
     >
       <item android:id="@+id/action_logout"
           android:title="Logout"
-          android:showAsAction="ifRoom"
-          android:icon="@drawable/logouticon"/>
+          android:icon="@drawable/logouticon"
+          android:showAsAction="ifRoom"/>
       <item android:id="@+id/action_profile"
           android:title="Profile"
           android:icon="@drawable/profileicon"
