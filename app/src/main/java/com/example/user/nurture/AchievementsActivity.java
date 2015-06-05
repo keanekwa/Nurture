@@ -83,9 +83,18 @@ public class AchievementsActivity extends ActionBarActivity {
                         }
                     }
                     ListView lvToShow = (ListView)findViewById(R.id.achievesListView);
-                    AchievesAdapter adapter;
-                    adapter = new AchievesAdapter(AchievementsActivity.this, R.layout.list_achieves, mAchieves);
-                    lvToShow.setAdapter(adapter);
+                    if (mAchieves.size() == 0){
+                        lvToShow.setVisibility(View.GONE);
+                        noAchieves.setVisibility(View.VISIBLE);
+                    }
+
+                    else {
+                        lvToShow.setVisibility(View.VISIBLE);
+                        noAchieves.setVisibility(View.GONE);
+                        ArrayAdapter<ParseObject> adapter;
+                        adapter = new AchievesAdapter(AchievementsActivity.this, R.layout.list_achieves, mAchieves);
+                        lvToShow.setAdapter(adapter);
+                    }
 
                 }
 
