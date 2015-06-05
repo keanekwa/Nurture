@@ -1,6 +1,9 @@
 package com.example.user.nurture;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,15 +12,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
+import com.parse.GetDataCallback;
+import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class AchievementsActivity extends ActionBarActivity {
@@ -29,13 +39,45 @@ public class AchievementsActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_achievements);
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setTitle("Your Achievements");
-        ArrayList <String> mAchieves = new ArrayList<>();
+        final ArrayList <ParseObject> mAchieves = new ArrayList<>();
+
+        final List list = ParseUser.getCurrentUser().getList("achievements");
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).toString().equals("[]")) {
+                mAchieves.remove(i);
+            } else {
+
+                ParseQuery<ParseObject> check = ParseQuery.getQuery("Achievements");
+                final int finalI = i;
+                check.findInBackground(new FindCallback<ParseObject>() {
+                                           @Override
+                                           public void done(List<ParseObject> list2, ParseException e) {
+                                               if (e == null) {
+                                                   for (int j = 0; j < list2.size(); j++) {
+                                                       if (list.get(finalI) == list2.get(j).getInt("achID")) {
+                                                           mAchieves.add(list2.get(j));
+                                                       }
+                                                   }
+                                               }
+
+                                               else{
+                                                   // Set a textView with "You do not have any achievements yet."
+                                               }
 
 
-        ArrayAdapter<String> adapter;
+                                           }
+                                       }
+
+                );
+
+
+            }
+        }
+
+        ArrayAdapter<ParseObject> adapter;
         adapter = new AchievesAdapter(this, R.layout.list_achieves, mAchieves);
         lvToShow.setAdapter(adapter);
     }
@@ -62,15 +104,15 @@ public class AchievementsActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class AchievesAdapter extends ArrayAdapter<String> {
+    private class AchievesAdapter extends ArrayAdapter<ParseObject> {
         //creating variables
         private int mResource;
-        private ArrayList<String> mAchieves;
+        private ArrayList<ParseObject> mAchieveTitles;
 
-        public AchievesAdapter (Context context, int resource, ArrayList<String> achievements) {
-            super(context, resource, achievements);
+        public AchievesAdapter (Context context, int resource, ArrayList<ParseObject> achievementTitles) {
+            super(context, resource, achievementTitles);
             mResource = resource;
-            mAchieves = achievements;
+            mAchieveTitles = achievementTitles;
         }
 
         //display subject data in every row of listView
@@ -80,15 +122,26 @@ public class AchievementsActivity extends ActionBarActivity {
                 row = getLayoutInflater().inflate(mResource, parent, false);
             }
 
-            ParseQuery<ParseObject> check = ParseQuery.getQuery("Achievements");
-
-            final String currentAchieve = mAchieves.get(position);
+            final ParseObject currentAchieve = mAchieveTitles.get(position);
             TextView titleTextView = (TextView) row.findViewById(R.id.achievesTitle);
-            titleTextView.setText(currentAchieve);
+            titleTextView.setText(currentAchieve.get("name").toString());
             final TextView subtitleTextView = (TextView) row.findViewById(R.id.achievesSubtitle);
-            subtitleTextView.setText(currentAchieve);
-            Button achievesIcon = (Button) row.findViewById(R.id.achievesPic);
-            achievesIcon.setBackgroundResource(R.drawable.logouticon);
+            subtitleTextView.setText(currentAchieve.get("subtitle").toString());
+            ParseFile fileObject = currentAchieve.getParseFile("badgePic");
+            final ImageView achievesIcon = (ImageView) row.findViewById(R.id.achievesPic);
+            fileObject.getDataInBackground(new GetDataCallback() {
+                @Override
+                public void done(byte[] data, ParseException e) {
+                    if (e == null) {
+                        Bitmap bmp = BitmapFactory
+                                .decodeByteArray(
+                                        data, 0,
+                                        data.length);
+                        achievesIcon.setImageBitmap(bmp);
+
+                    }
+                }
+            });
             return row;
         }
     }
