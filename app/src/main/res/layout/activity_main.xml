@@ -35,12 +35,19 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/congratsTextView"
             tools:text="Congrats you are a champion!"
-            android:padding="30dp"
+            android:paddingTop="15dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
             android:textColor="#FFF"
-            android:textSize="50sp"/>
+            android:textSize="36sp"
+            android:shadowDx="4"
+            android:shadowDy="4"
+            android:shadowColor="#333"
+            android:shadowRadius="1"
+            android:fontFamily="sans-serif-light" />
 
     </RelativeLayout>
 
