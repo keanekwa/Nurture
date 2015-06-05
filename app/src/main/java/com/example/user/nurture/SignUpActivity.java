@@ -34,9 +34,11 @@ public class SignUpActivity extends Activity {
     String usernameInput;
     String passwordInput;
     String schoolInput;
+    String roleInput;
     String cPasswordInput;
     String emailInput;
     Button mAddAccount;
+    Button mRoleBlank;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +49,21 @@ public class SignUpActivity extends Activity {
         mCPasswordBlank = (EditText) findViewById(R.id.PasswordBlank2);
         mEmailAddBlank = (EditText) findViewById(R.id.EmailBlank);
         mSchoolBlank = (Button) findViewById(R.id.SchoolBlank);
+        mRoleBlank = (Button) findViewById(R.id.roleButton);
 
         mSchoolBlank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Dialog();
+
+
+            }
+        });
+
+        mRoleBlank.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog2();
 
 
             }
@@ -153,6 +165,26 @@ public class SignUpActivity extends Activity {
                         mSchoolBlank.setText(schoolInput);
                     }
                 });
+        builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void Dialog2() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
+        builder.setTitle("Choose your role");
+        builder.setItems(R.array.mRoleList, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                List<String> array = Arrays.asList(getResources().getStringArray(R.array.mRoleList));
+                roleInput = array.get(which);
+                mRoleBlank.setText(roleInput);
+            }
+        });
         builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
 
