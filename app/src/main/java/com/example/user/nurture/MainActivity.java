@@ -151,9 +151,19 @@ public class MainActivity extends ActionBarActivity {
                     }
                     if(daysLeft<0) daysLeftText= String.valueOf(Math.abs(daysLeft))+" days ago";
                     if(userInfo.getString("lastHelped")!=null) mCongratsText.setText("You have helped "+userInfo.getString("lastHelped")+" "+daysText+"!\nHelp someone else " +daysLeftText+ " to keep nurturing your plant!");
-                    else mCongratsText.setText("Help someone else "+daysLeftText+" to keep nurturing your plant!");
+                    else mCongratsText.setText("Help someone "+daysLeftText+" to keep nurturing your plant!");
 
-                    if (userInfo.getString("receiver") == null && userInfo.getBoolean("hasDoneKindness")) {
+                    if(daysLeft<=0){
+                        userInfo.put("plantStage", 4);
+                        mPlantie.setImageResource(imageIDs[4]);
+                        userInfo.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                pb.setVisibility(View.GONE);
+                            }
+                    });
+                    }
+                    else if (userInfo.getString("receiver") == null && userInfo.getBoolean("hasDoneKindness")) {
                         userInfo.put("hasDoneKindness", false);
                         int currentPlantStage = userInfo.getInt("plantStage");
                         if (currentPlantStage < (messageCount - 1)) {

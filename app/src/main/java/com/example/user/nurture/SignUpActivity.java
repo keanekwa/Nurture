@@ -112,22 +112,24 @@ public class SignUpActivity extends Activity {
                                 newUserInfo.put("role", roleInput);
                                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                                 byte[] data = stream.toByteArray();
-
                                 final ParseFile profImg = new ParseFile(String.valueOf(R.drawable.default_profile), data);
-                                profImg.saveInBackground();
-                                newUserInfo.put("profilePic", profImg);
-
-                                newUserInfo.saveInBackground(new SaveCallback() {
+                                profImg.saveInBackground(new SaveCallback() {
                                     @Override
                                     public void done(ParseException e) {
-                                        ParseUser.logInInBackground(usernameInput, passwordInput, new LogInCallback() {
-                                            public void done(ParseUser user, ParseException e) {
-                                                if (user != null && e == null) {
-                                                    Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                                                    SignUpActivity.this.startActivity(intent);
-                                                } else {
-                                                    alertMessage(e.toString());
-                                                }
+                                        newUserInfo.put("profilePic", profImg);
+                                        newUserInfo.saveInBackground(new SaveCallback() {
+                                            @Override
+                                            public void done(ParseException e) {
+                                                ParseUser.logInInBackground(usernameInput, passwordInput, new LogInCallback() {
+                                                    public void done(ParseUser user, ParseException e) {
+                                                        if (user != null && e == null) {
+                                                            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                                                            SignUpActivity.this.startActivity(intent);
+                                                        } else {
+                                                            alertMessage(e.toString());
+                                                        }
+                                                    }
+                                                });
                                             }
                                         });
                                     }
