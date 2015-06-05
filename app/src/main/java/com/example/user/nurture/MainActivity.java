@@ -282,17 +282,23 @@ public class MainActivity extends ActionBarActivity {
                                                         public void done(ParseException e) {
                                                             ParseQuery<ParseObject> query = ParseQuery.getQuery("Achievements");
                                                             boolean toAddAchievement;
-                                                            switch (userInfo.getInt("kindnessCount")){
+                                                            int blah = userInfo.getInt("kindnessCount");
+                                                            switch (blah){
                                                                 case 1: query.whereEqualTo("achID", 1);
                                                                     toAddAchievement = true;
+                                                                    break;
                                                                 case 5: query.whereEqualTo("achID", 5);
                                                                     toAddAchievement = true;
+                                                                    break;
                                                                 case 10: query.whereEqualTo("achID", 10);
                                                                     toAddAchievement = true;
+                                                                    break;
                                                                 case 20: query.whereEqualTo("achID", 20);
                                                                     toAddAchievement = true;
+                                                                    break;
                                                                 default:
                                                                     toAddAchievement = false;
+                                                                    break;
                                                             }
                                                             if(toAddAchievement){
                                                                 query.findInBackground(new FindCallback<ParseObject>() {
