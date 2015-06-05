@@ -112,9 +112,10 @@ public class SignUpActivity extends ActionBarActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String[] array = getResources().getStringArray(R.array.mSchoolList);
-                        ArrayList<String> l =new ArrayList<String>();
+                        ArrayList<String> l =new ArrayList<>();
                         l.equals(array);
-                        l.get(which);
+                        schoolInput = l.get(which);
+
                     }
                 })
                 .setNegativeButton("Back", new DialogInterface.OnClickListener() {
