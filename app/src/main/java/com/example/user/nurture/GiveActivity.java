@@ -1,6 +1,7 @@
 package com.example.user.nurture;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -19,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
+import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -207,6 +209,16 @@ public class GiveActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+        else if (id == R.id.action_logout) {
+            ParseUser.getCurrentUser().logOutInBackground(new LogOutCallback() {
+                @Override
+                public void done(ParseException e) {
+                    Intent intent = new Intent(GiveActivity.this, LoginActivity.class);
+                    GiveActivity.this.startActivity(intent);
+                }
+            });}
+
+
 
         return super.onOptionsItemSelected(item);
     }

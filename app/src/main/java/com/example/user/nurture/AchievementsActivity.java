@@ -130,7 +130,6 @@ public class AchievementsActivity extends ActionBarActivity {
                                         data, 0,
                                         data.length);
                         achievesIcon.setImageBitmap(bmp);
-
                     }
                 }
             });
