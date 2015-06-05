@@ -55,7 +55,7 @@ public class GiveActivity extends ActionBarActivity {
                     ParseObject userInfo = parseObjects.get(0);
                     mNameTextView.setText(userInfo.getString("username"));
                     mSchoolTextView.setText(userInfo.getString("class"));
-                    //mProfilePic.setImageDrawable(userInfo.getFile("profilePic"));
+                    //mProfilePic.setImageDrawable(userInfo.getFile("profilepic"));
                 }
             }
         });
