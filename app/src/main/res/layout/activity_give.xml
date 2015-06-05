@@ -37,33 +37,49 @@
                 android:focusable="false"
                 android:paddingRight="16dp"/>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_weight="3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:weightSum="2"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/nameTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:gravity="left|top"
                     tools:text="Name"
-                    android:layout_weight="1"
-                    android:textSize="20sp"
-                    android:textColor="#fff"/>
+                    android:textSize="40sp"
+                    android:textColor="#fff"
+                    android:textStyle="bold"/>
+                <TextView
+                android:id="@+id/roleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left|top"
+                tools:text="Role"
+                android:textSize="20sp"
+                android:textColor="#fff"
+                android:layout_below="@+id/nameTextView"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="8dp"
+                android:text="Role"/>
+
                 <TextView
                     android:id="@+id/schoolTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:gravity="left|top"
                     tools:text="School"
-                    android:layout_weight="1"
                     android:textSize="20sp"
-                    android:textColor="#fff"/>
+                    android:textColor="#fff"
+                    android:layout_below="@+id/roleTextView"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="5dp"/>
 
-                </LinearLayout>
+                </RelativeLayout>
             </LinearLayout>
         </FrameLayout>
 
