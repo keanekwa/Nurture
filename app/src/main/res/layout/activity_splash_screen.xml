@@ -14,15 +14,18 @@
         android:id="@+id/imageView2"
         android:src="@drawable/nurturelogowhite"
         android:paddingBottom="60dp"
-        android:layout_alignBottom="@+id/progressBar"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:layout_above="@+id/progressBar"
         android:layout_alignParentRight="true" />
 
     <ProgressBar
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:indeterminate="true"
-        android:layout_centerVertical="true"
+        android:id="@+id/progressBar"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/progressBar" />
+        android:layout_marginBottom="161dp" />
 
 </RelativeLayout>
