@@ -48,6 +48,9 @@ public class MainActivity extends ActionBarActivity {
         //mPlantie.setImageResource(imageIDs[0]);
 
         //mPlantie.setImageResource(imageIDs[currentIndex]);
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setTitle("Home");
 
         mGiveButton = (Button) findViewById(R.id.GiveButton);
         mReceiveButton = (Button) findViewById(R.id.ReceiveButton);
@@ -134,18 +137,17 @@ public class MainActivity extends ActionBarActivity {
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
-                if(e==null && parseObjects.size()==1){
+                if (e == null && parseObjects.size() == 1) {
                     ParseObject userInfo = parseObjects.get(0);
-                    if(userInfo.getString("kindnessToBeDone")!=null && !userInfo.getBoolean("hasDoneKindness")){
+                    if (userInfo.getString("kindnessToBeDone") != null && !userInfo.getBoolean("hasDoneKindness")) {
                         mReceiveButton.setEnabled(true);
                         mReceiveButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                            Dialog();
+                                Dialog();
                             }
                         });
-                    }
-                    else{
+                    } else {
                         mReceiveButton.setEnabled(false);
                     }
                 }
