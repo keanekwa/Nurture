@@ -1,5 +1,6 @@
 package com.example.user.nurture;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -30,7 +31,8 @@ public class LoginActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //getActionBar().hide();
+        android.support.v7.app.ActionBar myActionBar = getSupportActionBar();
+        myActionBar.hide();
 
         mSignUpTextView = (TextView) findViewById(R.id.signUpTextView);
         mSignUpTextView.setOnClickListener(new View.OnClickListener() {
