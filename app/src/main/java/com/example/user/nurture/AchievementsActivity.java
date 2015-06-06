@@ -66,8 +66,8 @@ public class AchievementsActivity extends ActionBarActivity {
                     mNameTextView.setText(receiverInfo.getString("username"));
                     mSchoolTextView.setText(receiverInfo.getString("school"));
                     mRoleTextView.setText(receiverInfo.getString("role"));
-
-                    ParseFile fileObject = receiverInfo.getParseFile("profilePic");
+                    mProfilePic.setImageResource(R.drawable.default_profile);
+                    /*ParseFile fileObject = receiverInfo.getParseFile("profilePic");
                     fileObject.getDataInBackground(new GetDataCallback() {
                         @Override
                         public void done(byte[] data, ParseException e) {
@@ -79,7 +79,7 @@ public class AchievementsActivity extends ActionBarActivity {
                                 mProfilePic.setImageBitmap(bmp);
                             }
                         }
-                    });
+                    });*/
                 }
             }
         });
