@@ -2,6 +2,8 @@ package com.example.user.nurture;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -20,8 +22,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
+import com.parse.GetDataCallback;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -141,6 +145,20 @@ public class GiveActivity extends ActionBarActivity {
                     mNameTextView.setText(receiverInfo.getString("username"));
                     mSchoolTextView.setText(receiverInfo.getString("school"));
                     mRoleTextView.setText(receiverInfo.getString("role"));
+
+                    ParseFile fileObject = receiverInfo.getParseFile("profilePic");
+                    fileObject.getDataInBackground(new GetDataCallback() {
+                        @Override
+                        public void done(byte[] data, ParseException e) {
+                            if (e == null) {
+                                Bitmap bmp = BitmapFactory
+                                        .decodeByteArray(
+                                                data, 0,
+                                                data.length);
+                                mProfilePic.setImageBitmap(bmp);
+                            }
+                        }
+                    });
                     //TODO: profile pic
                 }
             }
