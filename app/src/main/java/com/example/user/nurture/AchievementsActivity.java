@@ -37,6 +37,7 @@ public class AchievementsActivity extends ActionBarActivity {
     private TextView mNameTextView;
     private TextView mSchoolTextView;
     private TextView mRoleTextView;
+    private ImageView mProfilePic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class AchievementsActivity extends ActionBarActivity {
         mNameTextView = (TextView)findViewById(R.id.nameTextView);
         mSchoolTextView = (TextView)findViewById(R.id.schoolTextView);
         mRoleTextView = (TextView)findViewById(R.id.roleTextView);
+        mProfilePic = (ImageView) findViewById(R.id.profilePic);
 
         assert actionBar != null;
         actionBar.setTitle("Your Badges");
@@ -62,7 +64,19 @@ public class AchievementsActivity extends ActionBarActivity {
                     mNameTextView.setText(receiverInfo.getString("username"));
                     mSchoolTextView.setText(receiverInfo.getString("school"));
                     mRoleTextView.setText(receiverInfo.getString("role"));
-                    //TODO: profile pic
+                    ParseFile fileObject = receiverInfo.getParseFile("profilePic");
+                    fileObject.getDataInBackground(new GetDataCallback() {
+                        @Override
+                        public void done(byte[] data, ParseException e) {
+                            if (e == null) {
+                                Bitmap bmp = BitmapFactory
+                                        .decodeByteArray(
+                                                data, 0,
+                                                data.length);
+                                mProfilePic.setImageBitmap(bmp);
+                            }
+                        }
+                    });
                 }
             }
         });

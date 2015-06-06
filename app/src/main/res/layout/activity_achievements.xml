@@ -103,7 +103,7 @@
         android:layout_alignTop="@+id/achievesListView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="139dp"
-        android:textSize="40sp"
+        android:textSize="30sp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:gravity="center_vertical|center_horizontal"/>

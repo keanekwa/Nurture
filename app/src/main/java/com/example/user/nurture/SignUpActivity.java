@@ -3,6 +3,7 @@ package com.example.user.nurture;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.Menu;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -96,13 +98,22 @@ public class SignUpActivity extends Activity {
                         @Override
                         public void done(ParseException e) {
                             if(e==null) {
-                                ParseObject newUserInfo = new ParseObject("userInfo");
+                                final ParseObject newUserInfo = new ParseObject("userInfo");
                                 newUserInfo.put("username", usernameInput);
                                 newUserInfo.put("hasDoneKindness", false);
                                 newUserInfo.put("plantStage", 0);
                                 newUserInfo.put("kindnessCount", 0);
                                 newUserInfo.put("school", schoolInput);
                                 newUserInfo.put("role", roleInput);
+                                byte[] data = "default_profile.png".getBytes();
+                                final ParseFile profImg = new ParseFile("profilePic", data);
+                                profImg.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        newUserInfo.put("profilePic", profImg);
+                                    }
+                                });
+
                                 newUserInfo.saveInBackground(new SaveCallback() {
                                     @Override
                                     public void done(ParseException e) {
