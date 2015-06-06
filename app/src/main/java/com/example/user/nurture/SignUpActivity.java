@@ -3,6 +3,8 @@ package com.example.user.nurture;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -21,6 +23,7 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -105,14 +108,11 @@ public class SignUpActivity extends Activity {
                                 newUserInfo.put("kindnessCount", 0);
                                 newUserInfo.put("school", schoolInput);
                                 newUserInfo.put("role", roleInput);
-                                byte[] data = "default_profile.png".getBytes();
-                                final ParseFile profImg = new ParseFile("profilePic", data);
-                                profImg.saveInBackground(new SaveCallback() {
-                                    @Override
-                                    public void done(ParseException e) {
-                                        newUserInfo.put("profilePic", profImg);
-                                    }
-                                });
+                                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                                byte[] data = stream.toByteArray();
+                                final ParseFile profImg = new ParseFile("default_profile.png", data);
+                                profImg.saveInBackground();
+                                newUserInfo.put("profilePic", profImg);
 
                                 newUserInfo.saveInBackground(new SaveCallback() {
                                     @Override

@@ -26,6 +26,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +65,7 @@ public class AchievementsActivity extends ActionBarActivity {
                     mNameTextView.setText(receiverInfo.getString("username"));
                     mSchoolTextView.setText(receiverInfo.getString("school"));
                     mRoleTextView.setText(receiverInfo.getString("role"));
+
                     ParseFile fileObject = receiverInfo.getParseFile("profilePic");
                     fileObject.getDataInBackground(new GetDataCallback() {
                         @Override
