@@ -3,9 +3,6 @@ package com.example.user.nurture;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.Menu;
@@ -18,13 +15,11 @@ import android.widget.Toast;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
-import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -115,15 +110,20 @@ public class SignUpActivity extends Activity {
                                 newUserInfo.put("dateLastKind", new Date());
                                 newUserInfo.put("school", schoolInput);
                                 newUserInfo.put("role", roleInput);
-                                ParseUser.logInInBackground(usernameInput, passwordInput, new LogInCallback() {
-                                    public void done(ParseUser user, ParseException e) {
-                                        if (user != null && e == null) {
-                                            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                                            loading.setVisibility(View.GONE);
-                                            SignUpActivity.this.startActivity(intent);
-                                        } else {
-                                            alertMessage(e.toString());
-                                        }
+                                newUserInfo.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        ParseUser.logInInBackground(usernameInput, passwordInput, new LogInCallback() {
+                                            public void done(ParseUser user, ParseException e) {
+                                                if (user != null && e == null) {
+                                                    Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                                                    loading.setVisibility(View.GONE);
+                                                    SignUpActivity.this.startActivity(intent);
+                                                } else {
+                                                    alertMessage(e.toString());
+                                                }
+                                            }
+                                        });
                                     }
                                 });
                                 /*ByteArrayOutputStream stream = new ByteArrayOutputStream();

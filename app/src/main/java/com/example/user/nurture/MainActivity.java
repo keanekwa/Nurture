@@ -169,16 +169,8 @@ public class MainActivity extends ActionBarActivity {
                     else if (userInfo.getString("receiver") == null && userInfo.getBoolean("hasDoneKindness")) {
                         userInfo.put("hasDoneKindness", false);
                         int currentPlantStage = userInfo.getInt("plantStage");
-                        if (currentPlantStage < (messageCount - 1)) {
-                            userInfo.put("plantStage", currentPlantStage + 1);
-                        }
                         mPlantie.setImageResource(imageIDs[currentPlantStage]);
-                        userInfo.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
-                                pb.setVisibility(View.GONE);
-                            }
-                        });
+                        pb.setVisibility(View.GONE);
 
                     }
                     else {
@@ -319,8 +311,10 @@ public class MainActivity extends ActionBarActivity {
                                                     userInfo.put("hasDoneKindness", true);
                                                     userInfo.remove("receiver");
                                                     userInfo.remove("kindnessToBeDone");
-                                                    userInfo.put("lastHelped", usernameEditText.getText().toString());
+                                                    userInfo.put("lastHelped", ParseUser.getCurrentUser().getUsername());
                                                     userInfo.put("dateLastKind", new Date());
+                                                    int plantStage = userInfo.getInt("plantStage");
+                                                    if(plantStage<=2) userInfo.put("plantStage", plantStage+1);
                                                     userInfo.put("kindnessCount", (1 + userInfo.getInt("kindnessCount")));
                                                     userInfo.saveInBackground(new SaveCallback() {
                                                         @Override
